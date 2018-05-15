@@ -1,0 +1,107 @@
+{% extends 'dashboard_admin/index.html' %}
+{% block extra %}
+	{% load widget_tweaks %}
+	{% load da_tags %}
+{% endblock %}
+{% block central_column %}
+<!-- COLUNA DO MEIO -->
+<div class="col-sm-9">
+	{% block dashboard_title %}
+	<h5>Área Administrativa -> Novo Serviço</h5>
+	{% endblock %}
+
+	<div class="container" style="width: 100%">
+	  {% if messages %}
+	    {% for message in messages %}
+	        <div class="alert alert-warning alert-dismissable">
+	          <button type="button" class="close" data-dismiss="alert">&times;</button>
+	          {{ message }}
+	        </div>
+	    {% endfor %}
+	  {% endif %}
+	</div>
+	{% for error in form.errors %}
+	<div class="alert alert-danger">
+	    {{ error }}
+	</div>
+	{% endfor %}
+
+	<form class="form-horizontal" method="post" 
+	enctype="multipart/form-data">
+	{% csrf_token %}
+	    <fieldset>
+
+	        <div class="form-group {% if form.description.erros %} has-error {% endif %}">
+	          <label for="{{ form.description.auto_id }}" class="col-md-3 control-label">
+	              Descrição
+	          </label>
+	          <div class="col-md-9">
+	            {% render_field form.description class="form-control" %}
+	            {% for error in form.description.errors %}
+	                <span class="help-block">{{ error }}</span>
+	            {% endfor %}
+	          </div>
+	        </div>
+
+	        <div class="form-group {% if form.image.erros %} has-error {% endif %}">
+	          <label for="{{ form.image.auto_id }}" class="col-md-3 control-label">
+	              Imagem
+	          </label>
+	          <div class="col-md-9">
+	            {% render_field form.image class="form-control" %}
+	            {% for error in form.image.errors %}
+	                <span class="help-block">{{ error }}</span>
+	            {% endfor %}
+	          </div>
+	        </div>
+
+	       <div class="form-group {% if form.category.erros %} has-error {% endif %}">
+	          <label for="{{ form.category.auto_id }}" class="col-md-3 control-label">
+	              Categoria
+	          </label>
+	          <div class="col-md-9">
+	            <select class="form-control" name="category">
+	            	{% for category in categories %}
+	            	<option value="{{ category }}">{% get_dict_value category categories %}</option>
+	            	{% endfor %}
+	            </select>
+	            
+	          </div>
+	        </div> 
+
+	        <div class="form-group {% if form.value.erros %} has-error {% endif %}">
+	          <label for="{{ form.value.auto_id }}" class="col-md-3 control-label">
+	              Valor R$
+	          </label>
+	          <div class="col-md-9">
+	            {% render_field form.value class="form-control" %}
+	            {% for error in form.value.errors %}
+	                <span class="help-block">{{ error }}</span>
+	            {% endfor %}
+	          </div>
+	        </div> 
+
+	        <div class="form-group {% if form.value_creation_art.erros %} has-error {% endif %}">
+	          <label for="{{ form.value_creation_art.auto_id }}" class="col-md-3 control-label">
+	              Criação de arte R$
+	          </label>
+	          <div class="col-md-9">
+	            {% render_field form.value_creation_art class="form-control" %}
+	            {% for error in form.value_creation_art.errors %}
+	                <span class="help-block">{{ error }}</span>
+	            {% endfor %}
+	          </div>
+	        </div> 
+
+	        <div class="form-group">
+	          <div class="col-md-9 col-md-offset-3">
+	            <button type="submit" class="btn btn-primary">Enviar</button>
+	          </div>
+	        </div>
+	        
+	    </fieldset>
+	</form>
+
+
+</div>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'dashboard_admin/index.html' %}
+
+{% block extra %}
+	{% load widget_tweaks %}
+	{% load da_tags %}
+{% load da_tags %}
+{% endblock %}
+
+{% block central_column %}
+<!-- COLUNA DO MEIO -->
+<div class="col-sm-9">
+	{% block dashboard_title %}
+	<h5>Área Administrativa -> Editar Categoria</h5>
+	{% endblock %}
+
+	<div class="container" style="width: 100%">
+	  {% if messages %}
+	    {% for message in messages %}
+	        <div class="alert alert-success alert-dismissable">
+	          <button type="button" class="close" data-dismiss="alert">&times;</button>
+	          {{ message }}
+	        </div>
+	    {% endfor %}
+	  {% endif %}
+	</div>
+	
+	<form method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		<table class="table">
+			<tr>
+				<td>Descrição</td>
+				<td>{{ form.description }}</td>
+			</tr>
+			<tr>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Imagem</td>
+				<td>
+					<img src="{{ service.image.url }}">
+				</td>
+				
+			</tr>
+			<tr>
+				<td>Substituir imagem</td>
+				<td>
+					{{ form.image }}
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Categoria</td>
+				<td>
+					<select name="category">
+					{% for info_category in infos_categories %}
+						{% if info_category == current_category %}
+						<option selected="selected" value="{{ info_category }}">
+							{% get_dict_value info_category infos_categories %}
+						</option>
+						{% else %}
+						<option value="{{ info_category }}">
+							{% get_dict_value info_category infos_categories %}
+						</option>
+						{% endif %}
+					{% endfor %}
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Valor R$</td>
+				<td>{{ form.value }}</td>
+			</tr>
+			{% edit_value_creation_art service %}
+			<tr>
+				<td colspan="2">
+					<input type="submit" value="Enviar">
+				</td>
+			</tr>
+		</table>
+	</form>
+
+</div>
+{% endblock %}

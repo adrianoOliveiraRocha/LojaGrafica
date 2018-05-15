@@ -1,0 +1,65 @@
+{% extends 'dashboard_admin/index.html' %}
+
+{% block extra %}
+{% load da_tags %}
+{% endblock %}
+
+{% block central_column %}
+<!-- COLUNA DO MEIO -->
+<div class="col-sm-9">
+	{% block dashboard_title %}
+	<h5>Área Administrativa -> Serviços -> Detalhes</h5>
+	{% endblock %}
+
+	<div class="container" style="width: 100%">
+	  {% if messages %}
+	    {% for message in messages %}
+	        <div class="alert alert-warning alert-dismissable">
+	          <button type="button" class="close" data-dismiss="alert">&times;</button>
+	          {{ message }}
+	        </div>
+	    {% endfor %}
+	  {% endif %}
+	</div>
+	
+	{% csrf_token %}
+	<table class="table">
+		<tr>
+			<td>Descrição</td>
+			<td>{{ service.description }}</td>
+		</tr>
+		<tr>
+			<td>Imagem</td>
+			<td><img src="{{ service.image.url }}"></td>
+		</tr>
+		<tr>
+			<td>Categoria</td>
+			<td>{{ service.category }}</td>
+		</tr>
+		<tr>
+			<td>Valor R$</td>
+			<td>{{ service.value }}</td>
+		</tr>
+		{% value_creation_art service %}
+				
+	</table>
+	<table>
+		<tr>
+			<td>
+				<a href="{% url 'dashboard_admin:edit_service' service.id %}">
+					<input type="button" class="btn btn-primary"
+					value="Editar">
+				</a>
+			</td>
+			<td>
+				<a href="{% url 'dashboard_admin:delete_service' service.id %}">
+					<input type="button" class="btn btn-danger"
+					value="Deletar">
+				</a>
+			</td>
+		</tr>
+	</table>
+	
+
+</div>
+{% endblock %}

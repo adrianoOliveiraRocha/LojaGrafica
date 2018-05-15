@@ -1,0 +1,181 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+
+{% block extra %}
+{% load da_tags %}
+{% endblock %}
+
+{% block extrastatic %}
+
+<script type="text/javascript" language="javascript" class="init">
+  $(document).ready(function() {
+    $('#table').DataTable({
+      "language": {
+            "lengthMenu": "Exibindo _MENU_ registros por página",
+            "zeroRecords": "Nenhum registro encontrado - desculpe",
+            "info": "Exibindo a página _PAGE_ de _PAGES_",
+            "infoEmpty": "Sem registros disponíveis",
+            "infoFiltered": "(filtered from _MAX_ total records)"
+        },
+        "scrollX": true
+    });
+  } );
+</script>
+
+{% endblock %}
+
+	{% block superior %}
+	
+	<!-- esse bloco está à cima do menu -->
+	
+	{% endblock %} 
+
+	<!-- o menu está no base.html e aparece aqui -->
+
+	{% block conteudo %}
+
+	<div class="container-fluid" style="margin-top: 2%">
+		<div class="container-fluid">
+			<div class="row">
+				<!-- COLUNA DA ESQUERDA -->
+				<div class="col-sm-2">
+					<ul class="list-group" style="list-style-type: none;">
+						<li class="list-group-item">
+							<a href="#">
+								Impressão
+							</a>
+						</li>
+						<li class="list-group-item">
+							<a href="#">
+								Criação de Arte
+							</a>
+						</li>
+						<!-- Dropdown -->
+						<li class="list-group-item">
+							<a class="dropdown-toggle" href="#" id="navbardrop" 
+							data-toggle="dropdown">
+								Categorias
+							</a>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" 
+								href="{% url 'dashboard_admin:all_categories' %}">
+									Exibir Todas
+								</a>
+								<a class="dropdown-item" 
+								href="{% url 'dashboard_admin:new_category' %}">
+									Nova Categoria
+								</a>
+							</div>
+						</li>
+
+						<!-- Dropdown -->
+						<li class="list-group-item">
+							<a class="dropdown-toggle" href="#" id="navbardrop" 
+							data-toggle="dropdown">
+								Serviços
+							</a>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" 
+								href="{% url 'dashboard_admin:all_services' %}">
+									Exibir Todos
+								</a>
+								<a class="dropdown-item" 
+								href="{% url 'dashboard_admin:new_impress_service' %}">
+									Novo Serviço
+								</a>
+								<a class="dropdown-item" 
+								href="{% url 'dashboard_admin:new_art_service' %}">
+									Novo Serviço de Criação de Arte
+								</a>
+							</div>
+						</li>
+
+						<li class="list-group-item">
+							<a href="#">
+								Clientes cadastrados
+							</a>
+						</li>
+
+						<li class="list-group-item">
+							<a href="#">
+								Dados cadastrais
+							</a>
+						</li>
+
+					</ul> 
+				</div>
+				{% block central_column %}
+				<!-- COLUNA DO MEIO -->
+				<div class="col-sm-9">
+					{% block dashboard_title %}
+					<h5>Área Administrativa -> Pedidos de Impressão</h5>
+					{% endblock %}
+					<div class="container" style="width: 100%">
+		              {% if messages %}
+		                {% for message in messages %}
+		                    <div class="alert alert-success alert-dismissable">
+		                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+		                      {{ message }}
+		                    </div>
+		                {% endfor %}
+		              {% endif %}
+					</div>
+
+					<!-- datatable -->
+		            <div class="panel-body">
+		              <table id="table" class="display" cellspacing="0" 
+		                    width="100%">
+		                <thead>
+		                  <tr>
+		                    <th>Data</th>
+		                    <th>Valor R$</th>
+		                    <th>Status</th>
+		                    <th>Cliente</th>
+		                    
+		                  </tr>
+		                </thead>
+
+		                <tfoot>
+		                  <tr>
+		                    <th>Data</th>
+		                    <th>Valor R$</th>
+		                    <th>Status</th>
+		                    <th>Cliente</th>
+		                  </tr>
+		                </tfoot>
+
+		                <tbody>
+		                  {% for orderimpress in orderimpress_list %}
+		                  
+		                  <tr>
+		                  	
+		                  	<td style="text-align: center;">
+		                  	<a href="{% url 'accounts:datail_oi' orderimpress.id %}" 
+		                  	title="Exibir Detalhes do Pedido">
+		                      {{ orderimpress.date }}
+		                  	</a>
+		                    </td>
+		                    
+		                    <td>{{ orderimpress.value }}</td>
+		                    <td>{% show_status orderimpress.status %}</td>
+		                    <td>{{ orderimpress.user }}</td>
+		                  </tr>
+
+		                   {% endfor %}    
+		                </tbody>
+		              </table>
+		            </div>
+		            <!-- fim datatable -->            
+
+
+				</div>
+				{% endblock %}
+			</div>
+		</div>
+	</div>
+	{% endblock %} <!-- fim do bloco conteudo -->
+
+	<!-- rodapé que está na página base.html aparece aqui -->
+
+
