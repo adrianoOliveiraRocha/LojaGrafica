@@ -73,7 +73,7 @@ class OrderImpress(models.Model):
 		try:
 			orders = OrderImpress.objects.filter(user_id=user_id)
 			return orders.aggregate(Max('id'))['id__max']
-		except Exception as e:
+		except:
 			return None
 
 	@staticmethod
