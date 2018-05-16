@@ -62,6 +62,24 @@
 			<li class="nav-item">
 				<a class="nav-link" href="{% url 'core:quemsomos' %}">Quem Somos</a>
 			</li>
+
+			<!-- Dropdown -->
+			<!-- <li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbardrop" 
+				data-toggle="dropdown">
+				Categorias
+			</a>
+			<div class="dropdown-menu">
+				<a class="dropdown-item" href="#">Todas</a>
+				{% for category in categories %}
+				<a class="dropdown-item" 
+				href="{% url 'core:category' category.id %}">
+					{{ category }}
+				</a>
+				{% endfor %}
+			</div>
+			</li> -->
+
 			{% if user.is_authenticated %}
 
 			{% if user.is_staff %}
@@ -75,8 +93,9 @@
 			</li>
 			{% else %}
 			<li class="nav-item">
-				<a class="nav-link" href="#">
-				Área do cliente</a>
+				<a class="nav-link" href="{% url 'dashboard_client:index' %}">
+					Área do cliente
+				</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="{% url 'logout' %}">Sair</a>
@@ -91,18 +110,7 @@
 			</li>
 
 			{% endif %}
-			<!-- Dropdown -->
-			<!-- <li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" href="#" id="navbardrop" 
-				data-toggle="dropdown">
-				Dropdown link
-			</a>
-			<div class="dropdown-menu">
-				<a class="dropdown-item" href="#">Link 1</a>
-				<a class="dropdown-item" href="#">Link 2</a>
-				<a class="dropdown-item" href="#">Link 3</a>
-			</div>
-			</li> -->
+			
 		</ul>
 	</nav> 
 	{% endblock %} <!-- fim do bloco menu -->

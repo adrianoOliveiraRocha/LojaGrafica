@@ -31,6 +31,25 @@ def index(request):
 	return render(request, 'core/index.html', context)
 
 
+def category(request, category_id):
+	""" this view show the products of the one category """
+	categories = Category.objects.all()
+	
+	service_list = Service.objects.filter(category__id=category_id)
+	paginator = Paginator(service_list, 6)
+	page = request.GET.get('page')
+	services = paginator.get_page(page)
+
+	label_category = str.upper(Category.objects.get(id=category_id).name)
+
+	context = {
+		'label_category': label_category,
+		'categories': categories,
+		'services': services,
+		'paginator': paginator
+	}
+	return render(request, 'core/index.html', context)
+
 
 class QuemSomosView(TemplateView):
 	template_name = "core/quem_somos.html"

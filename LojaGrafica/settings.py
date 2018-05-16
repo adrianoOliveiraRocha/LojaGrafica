@@ -40,8 +40,9 @@ INSTALLED_APPS = [
     'accounts',
     'core',
     'dashboard_admin',
+    'dashboard_client',
     'widget_tweaks',
-    'checkout',
+    # 'checkout',
 ]
 
 MIDDLEWARE = [
@@ -118,9 +119,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-br'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Fortaleza'
 
 USE_I18N = True
 

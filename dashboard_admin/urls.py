@@ -7,7 +7,7 @@ app_name = 'dashboard_admin'
 urlpatterns = [
 	path('index', views.index, name='index'),
 	path('nova_category', views.new_category, name='new_category'),
-	path('categoria/<int:id_category>', views.category, name='category'),
+	# path('categoria/<int:id_category>', views.category, name='category'),
 	path('categorias', views.all_categories, name='all_categories'),
 	path('editar_categoria/<int:category_id>', views.edit_category,
 		name='edit_category'),

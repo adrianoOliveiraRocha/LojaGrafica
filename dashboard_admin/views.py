@@ -1,13 +1,14 @@
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from django.contrib.auth.decorators import login_required
-from checkout.models import OrderImpress
+from dashboard_client.models import OrderImpress
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from core.forms import CategoryForm
 from django.urls import reverse
 from core.models import Service, Category, ServiceImpress
 from core.forms import CategoryForm, ServiceForm
+
 
 @login_required
 def index(request):
@@ -47,24 +48,6 @@ def all_categories(request):
 	return render(request, 'dashboard_admin/all_categories.html',
 		{'categories': categories})
 
-
-def category(request, id_category):
-	categories = Category.objects.all()
-	
-	service_list = Service.objects.filter(category__id=id_category)
-	paginator = Paginator(service_list, 6)
-	page = request.GET.get('page')
-	services = paginator.get_page(page)
-
-	label_category = str.upper(Category.objects.get(id=id_category).name)
-
-	context = {
-		'label_category': label_category,
-		'categories': categories,
-		'services': services,
-		'paginator': paginator
-	}
-	return render(request, 'core/index.html', context)
 
 def delete_srvice(request, service_id):
 	service = Service.objects.get(id=service_id)
