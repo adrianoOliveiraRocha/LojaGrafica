@@ -1,90 +1,256 @@
 {% extends 'core/base.html' %}
-
 {% load static %}
 
 {% block extra %}
-{% load da_tags %}
-{% endblock %}
-
-{% block extrastatic %}
-
-<script type="text/javascript" language="javascript" class="init">
-  $(document).ready(function() {
-    $('#table').DataTable({
-      "language": {
-            "lengthMenu": "Exibindo _MENU_ registros por página",
-            "zeroRecords": "Nenhum registro encontrado - desculpe",
-            "info": "Exibindo a página _PAGE_ de _PAGES_",
-            "infoEmpty": "Sem registros disponíveis",
-            "infoFiltered": "(filtered from _MAX_ total records)"
-        },
-        "scrollX": true
-    });
-  } );
-</script>
 
 {% endblock %}
 
-{% block superior %}
+	{% block superior %}
 	
-<!-- esse bloco está à cima do menu -->
+	<!-- esse bloco está à cima do menu -->
 	
-{% endblock %}
+	{% endblock %} 
 
-{% block conteudo %}
-<div class="container-fluid" style="margin-top: 2%">
-	<div class="container-fluid">
-		<div class="row">
-			<!-- COLUNA DA ESQUERDA -->
-			<div class="col-sm-2">
-				<ul class="list-group">
-					<li class="list-group-item">
-						<a href="#">
-							Meus Pedidos
-						</a>
-					</li>
-					<li class="list-group-item">
-						<a href="#">
-							Criação de Arte
-						</a>
-					</li>
-					<li class="list-group-item">
-						<a href="#">
-							Dados Cadastrais
-						</a>
-					</li>
+	<!-- o menu está no base.html e aparece aqui -->
 
-				</ul>	
+	{% block conteudo %}
+
+	<div class="container-fluid" style="margin-top: 2%">
+		<div class="container-fluid">
+			<div class="row">
+				<!-- COLUNA DA ESQUERDA -->
+				<div class="col-sm-2">
+					<ul class="list-group">
+						<li class="list-group-item">
+							<a href="{% url 'dashboard_client:index' %}">
+								Meus Pedidos
+							</a>
+						</li>
+						<li class="list-group-item">
+							<a href="{% url 'dashboard_client:index_art' %}">
+								Criação de Arte
+							</a>
+						</li>
+						<li class="list-group-item">
+							<a href="#">
+								Dados Cadastrais
+							</a>
+						</li>
+
+					</ul> 
+				</div>
+				{% block central_column %}
+				<!-- COLUNA DO MEIO -->
+				<div class="col-sm-9">
+					{% block dashboard_title %}
+					<h5>Área do Cliente -> Meus Pedidos</h5>
+					{% endblock %}
+					<div class="container" style="width: 100%">
+		              {% if messages %}
+		                {% for message in messages %}
+		                    <div class="alert alert-success alert-dismissable">
+		                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+		                      {{ message }}
+		                    </div>
+		                {% endfor %}
+		              {% endif %}
+					</div>
+
+					{% if data %} <!-- test if data went sended -->
+					{% if data.order %}	
+						<h3>
+							Data do Pedido: {{ data.order.date }}
+						</h3>
+						
+						<div class="container" >
+						<!-- List of the impress -->
+						<table class="table">
+						{% for item in data.orderItemImpress_list %}
+							<thead>
+								<tr>
+									<th>Descrição</th>
+									<th>Valor R$</th>
+									<th>Logo</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										{{ item.service.description }}
+									</td>
+									<td>{{ item.service.value }}</td>
+																	
+									<td>
+										{% if item.art %}
+										<a href="{% url 'dashboard_client:send_logo' item.id %}">
+											Alterar
+										</a>
+										{% else %}
+										<a href="{% url 'dashboard_client:send_logo' item.id %}">
+											Enviar Logo
+										</a>
+										{% endif %}
+									</td>
+
+									<td>
+										<a href="{% url 'dashboard_client:delete_oii' item.id %}">
+											Deletar
+										</a>
+									</td>
+
+								</tr>
+								
+							</tbody>
+						{% endfor %}
+						</table>
+						<strong>Total R$: {{ data.total }}</strong>
+						<p></p>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4>O endereço de entrega é igual ao endereço do cliente?</h4>
+							</div>
+						  	<div class="panel-body">
+
+						  		{% if data.order.delivery_address_is_the_same %}
+								<div class="radio">
+									<label><input type="radio" 
+										name="delivery" checked="checked"
+										onclick="delivery({{data.order.id}}, 0)">
+										Sim
+									</label>
+								</div>
+								<div class="radio"  
+								onclick="delivery({{data.order.id}}, 1)">
+									<label><input type="radio" 
+										name="delivery">Não
+									</label>
+								</div>
+
+								{% else %}
+
+								<div class="radio">
+									<label><input type="radio" 
+										name="delivery"
+										onclick="delivery({{data.order.id}}, 0)">
+										Sim
+									</label>
+								</div>
+								<div class="radio"  
+								onclick="delivery({{data.order.id}}, 1)">
+									<label><input type="radio" 
+										name="delivery" checked="checked">
+										Não
+									</label>
+								</div>
+								<div class="panel-body">
+									<h3>Endereço de Entrega</h3>
+									<form action="{% url 'dashboard_client:save_address_delivery' %}"
+									method="post">
+									{% csrf_token %}
+										<table class="table">
+											<tr>
+												<td>Logradouro</td>
+												<td><input name="logradouro"
+													value="{{data.order.logradouro_delivery}}">
+												</td>
+											</tr>
+											<tr>
+												<td>Número</td>
+												<td><input name="numero"
+													value="{{data.order.numero_delivery}}"></td>
+											</tr>
+											<tr>
+												<td>CEP</td>
+												<td><input name="cep"
+													value="{{data.order.cep_delivery}}"></td>
+											</tr>
+											<tr>
+												<td>Complemento</td>
+												<td><input name="complemento"
+													value="{{data.order.complemento_delivery}}">
+												</td>
+											</tr>
+											<tr>
+												<td>Bairro</td>
+												<td><input name="bairro"
+													value="{{data.order.bairro_delivery}}"></td>
+											</tr>
+											<tr>
+												<td>Cidade</td>
+												<td><input name="cidade"
+													value="{{data.order.cidade_delivery}}"></td>
+											</tr>
+											<tr>
+												<td>Estado</td>
+												<td><input name="estado"
+													value="{{data.order.estado_delivery}}"></td>
+											</tr>
+											<tr>
+												<td colspan="2">
+													{% if data.number_field_ad == 0 %}
+													<input type="submit" 
+													value="Salvar"
+													title="Click aqui para salvar o endereço de entrega">
+													{% else %}
+													<input type="submit" 
+													value="Atualizar" 
+													title="Click aqui para atualizar o endereço de entrega">
+													{% endif %}
+												</td>
+											</tr>
+											
+										</table>
+										
+										<input type="hidden" name="order_id" 
+										value="{{data.order.id}}">
+									</form>
+									
+								</div>
+
+								{% endif %}
+						  	</div>
+						</div>
+						
+						<!-- butoons here -->
+						<div class="container">
+						  	<a href="{% url 'core:index' %}">
+							<button type="button" 
+						  	class="btn btn-outline-primary">
+								Continuar comprando
+							</button>
+							</a>
+							<button type="button" 
+						  	class="btn btn-outline-primary">
+								Finalizar Pedido
+							</button>
+
+						  	<a href="{% url 'dashboard_client:cancel_orderImpress' data.order.id %}">
+						  	<button type="button" 
+						  	class="btn btn-outline-primary">
+								Cancelar
+							</button>
+							</a>
+
+						</div>
+						</div>
+						
+					{% endif %}
+
+					{% else %}
+						<i style="color: red">Não há pedido ativo</i>
+					{% endif %} <!-- test if data went sended -->
+
+					
+
+				</div>
+				{% endblock %}
 			</div>
 
-			{% block central_column %}
-			<!-- COLUNA DO MEIO -->
-			<div class="col-sm-9">
-				{% block dashboard_title %}
-					<h5>Área do Cliente -> Meus Pedidos</h5>
-				{% endblock %}
-
-				<div class="container" style="width: 100%">
-					{% if messages %}
-						{% for message in messages %}
-							<div class="alert alert-success alert-dismissable">
-								<button type="button" class="close" 
-								data-dismiss="alert">&times;</button>
-								{{ message }}
-							</div>
-						{% endfor %}
-					{% endif %}
-				</div>
-
-				
-
-			</div>			
-			{% endblock %}
-
-				
 		</div>
-			
 	</div>
-	
-</div>
-{% endblock %}
+	{% endblock %} <!-- fim do bloco conteudo -->
+
+	<!-- roda pé que está na página base.html aparece aqui -->
+
+

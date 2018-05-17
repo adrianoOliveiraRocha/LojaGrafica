@@ -1,0 +1,140 @@
+{% extends 'dashboard_client/index.html' %}
+
+{% block extra %}
+{% load dc_tags %}
+{% endblock %}
+
+{% block central_column %}
+<!-- COLUNA DO MEIO -->
+{% if data %} <!-- test if data went sended -->
+<div class="col-sm-9">
+	{% block dashboard_title %}
+	<h5>Área do Cliente -> Criação de Arte</h5>
+	{% endblock %}
+	<div class="container" style="width: 100%">
+      {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-warning alert-dismissable">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              {{ message }}
+            </div>
+        {% endfor %}
+      {% endif %}
+	</div>
+
+	
+	{% if data.orderArt %}	
+		<h3>
+			Data do Pedido: {{ data.orderArt.date }}
+		</h3>
+		
+		<div class="container" >
+		<!-- List of the impress -->
+		{% for orderItemArt in data.orderItemArt_list %}
+			<table class="table">
+				<tr>
+					<td>Descrição</td>
+					<td>
+						{{ orderItemArt.service.description }}
+					</td>
+				</tr>
+				<tr>
+					<td>Imagem Exemplo 1</td>
+					<td>
+						{% if orderItemArt.image_example1 %}
+						<a href="#">Alterar</a>
+						{% else %}
+						<a href="#">
+							Enviar
+						</a>
+						{% endif %}
+					</td>
+				</tr>
+				<tr>
+					<td>Imagem Exemplo 2</td>
+					<td>
+						{% if orderItemArt.image_example2 %}
+						<a href="#">Alterar</a>
+						{% else %}
+						<a href="#">
+							Enviar
+						</a>
+						{% endif %}
+					</td>
+				</tr>
+				<tr>
+					<td>Imagem Exemplo 3</td>
+					<td>
+						{% if orderItemArt.image_example3 %}
+						<a href="#">Alterar</a>
+						{% else %}
+						<a href="#">
+							Enviar
+						</a>
+						{% endif %}
+					</td>
+				</tr>
+				<tr>
+					<td>Imagem Exemplo 4</td>
+					<td>
+						{% if orderItemArt.image_example4 %}
+						<a href="#">Alterar</a>
+						{% else %}
+						<a href="#">
+							Enviar
+						</a>
+						{% endif %}
+					</td>
+				</tr>
+				<tr>
+					<td>Valor R$</td>
+					<td>{{ orderItemArt.service.value }}</td>
+				</tr>
+				
+				<tr>
+					<td colspan="2"></td>
+				</tr>
+				
+				<tr><td></td></tr>
+				<tr>
+					<td colspan="2">
+						<a href="#">Deletar</a>
+					</td>
+				</tr>
+			</table>
+		{% endfor %}
+		<!-- butoons here -->
+		<div class="container">
+		  	<a href="{% url 'core:index' %}">
+			<button type="button" 
+		  	class="btn btn-outline-primary">
+				Continuar comprando
+			</button>
+			</a>
+			<button type="button" 
+		  	class="btn btn-outline-primary">
+				Finalizar Pedido
+			</button>
+		  	
+		  	<a href="#">
+		  	<button type="button" 
+		  	class="btn btn-outline-primary">
+				Cancelar
+			</button>
+			</a>
+			
+		</div>
+		</div>
+		<h3>
+			Total R$: {{ data.total }}
+		</h3>
+	{% else %}
+	<i style="color: red">Nenuhum pedido ativo</i>
+	{% endif %}
+</div>
+{% else %}
+	{% show_services_art request %}
+{% endif %} <!-- test if data went sended -->
+
+{% endblock %}
+			

@@ -1,0 +1,49 @@
+{% load dc_tags %}
+<!-- COLUNA DO MEIO -->
+
+<div class="col-sm-9">
+	<h5>Área do Cliente -> Criação de Arte</h5>
+	<div class="row">
+	{% for service in services %}
+		<div class="col-sm-4">
+			<img src="{{ service.image.url }}">
+			<div>{{ service.description }}</div>
+			<div>Valor {% get_value service.id %}</div>
+			<div><a href="#">Colocar no Carrinho</a></div>
+			<p></p>
+		</div>
+	{% endfor %}
+	</div>
+
+	<!-- PAGINAÇÂO -->
+	<div class="container">
+		<ul class="pagination">
+		    {% if services_has_previous %}
+	    	<li class="page-item">
+	    		<a class="page-link" 
+	    			href="?page={{ services.previous_page_number }}">Anterior
+	    		</a>
+	    	</li>
+	        {% endif %}
+
+	        <!-- passar por todas -->
+	        {% for num in paginator.page_range %}
+	        <li class="page-item {% if num == service_number %} active {% endif %}">
+	        	<a class="page-link" 
+	        	href="?page={{ num }}">
+	        		{{ num }}
+	        	</a>
+	        </li>
+	        {% endfor %}
+
+	        {% if services_has_next %}
+	        <li class="page-item">
+	    		<a class="page-link" 
+	    			href="?page={{ services.next_page_number }}">Próxima
+	    		</a>
+	    	</li>
+	        {% endif %}
+		</ul>
+	</div> <!-- FIM PÁGINAÇÃO -->
+
+</div>

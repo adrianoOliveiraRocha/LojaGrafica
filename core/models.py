@@ -76,9 +76,23 @@ class Service(models.Model):
 		else:
 			return False
 
+	@staticmethod
+	def get_only_service():
+		""" return services that are not ServiceImpress """
+		services = Service.objects.all()
+		art_service = []
+		for service in services:
+			try:
+				ServiceImpress.objects.get(id=service.id)
+			except:
+				# it is not service impress
+				art_service.append(service)
+		return art_service
 	
 # create impress service
 class ServiceImpress(Service):
 	value_creation_art = models.DecimalField(verbose_name='Valor',
 		max_digits=8, decimal_places=2)
+	deadline = models.PositiveSmallIntegerField('Prazo para criação de arte',
+		null=True, blank=True)
 	

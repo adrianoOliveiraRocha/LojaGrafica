@@ -53,10 +53,7 @@ class OrderImpress(models.Model):
 		blank=True, default='')
 	estado_delivery = models.CharField('Estado', max_length=100, null=True,
 		blank=True, default='')
-	value_art_creation = models.CharField('Valor para criação de arte',
-		max_length=10)
-	deadline = models.PositiveSmallIntegerField('Prazo para criação de arte')
-	
+		
 	def __str__(self):
 		return 'Feito por {} em {}'.format(self.user, self.date)
 
@@ -90,7 +87,7 @@ class OrderImpress(models.Model):
 			if orderImpress.status == 'EA':
 				data.update({'order': orderImpress})
 			else:
-				data.update({'msg': 'Não há pedido ativo'})
+				pass
 
 			number_field_ad = OrderImpress.get_number_field_ad(orderImpress)
 			orderItemImpress_list, total = OrderItemImpress.getList(order_id)
@@ -124,6 +121,15 @@ class OrderImpress(models.Model):
 			number = number + 1
 		
 		return number
+
+	@staticmethod
+	def current_value(order_id):
+		orderItemImpress_list = \
+		OrderItemImpress.objects.filter(order_id=order_id)
+		total = 0
+		for item in orderItemImpress_list:
+			total = total + item.service.value
+		return total
 
 	@staticmethod
 	def getLastOrderImpress(user_id):
@@ -196,15 +202,15 @@ class OrderArt(models.Model):
 			return None
 
 	@staticmethod
-	def get_orderArt_data(request):
+	def get_orderArt_data(user_id):
 		# get last order 
-		orderArt = OrderArt.getLastOrderArt(request.user.id)
+		orderArt = OrderArt.getLastOrderArt(user_id)
 		if orderArt is not None:
 			data = {}	
 			if orderArt.status == 'EA':
 				data.update({'orderArt': orderArt})
 			else:
-				data.update({'msg': 'Não há pedido ativo'})
+				pass
 
 			orderItemArt_list, total = OrderItemArt.getList(orderArt.id)
 			data.update({'orderItemArt_list': orderItemArt_list})
@@ -212,6 +218,15 @@ class OrderArt(models.Model):
 			return data
 		else:
 			return None
+
+	@staticmethod
+	def current_value(order_id):
+		orderItemArt_list = \
+		OrderItemArt.objects.filter(orderArt_id=order_id)
+		total = 0
+		for item in orderItemArt_list:
+			total = total + item.service.value
+		return total
 
 
 class OrderItemArt(models.Model):
