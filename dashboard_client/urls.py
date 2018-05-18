@@ -15,4 +15,6 @@ urlpatterns = [
     	name='delivery'),
     path('salvar_dendereco_de_entrega', views.save_address_delivery, 
     	name='save_address_delivery'),
+    path('confirmar_solicitacao', views.confirm_solicitation,
+    	name='confirm_solicitation')
 ]

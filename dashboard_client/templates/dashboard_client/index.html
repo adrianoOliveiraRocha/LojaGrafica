@@ -64,13 +64,14 @@
 						
 						<div class="container" >
 						<!-- List of the impress -->
+
 						<table class="table">
 						{% for item in data.orderItemImpress_list %}
 							<thead>
 								<tr>
 									<th>Descrição</th>
 									<th>Valor R$</th>
-									<th>Logo</th>
+									<th>Arte</th>
 									<th></th>
 								</tr>
 							</thead>
@@ -87,15 +88,23 @@
 											Alterar
 										</a>
 										{% else %}
-										<a href="{% url 'dashboard_client:send_logo' item.id %}">
-											Enviar Logo
-										</a>
+											{% if item.creation_art_solicited %}
+												<strong>Solicitado</strong>
+											{% else %}
+											<a href="{% url 'dashboard_client:send_logo' item.id %}">
+												<button class="btn btn-primary">
+													Enviar / Solicitar
+												</button>
+											</a>
+											{% endif %}
 										{% endif %}
-									</td>
 
+									</td>
+									
 									<td>
-										<a href="{% url 'dashboard_client:delete_oii' item.id %}">
-											Deletar
+										<a href="{% url 'dashboard_client:delete_oii' item.id %}"
+										title="Deletar esse ítem do pedido">
+											<button class="btn btn-danger">Deletar</button> 
 										</a>
 									</td>
 
@@ -216,18 +225,18 @@
 						<div class="container">
 						  	<a href="{% url 'core:index' %}">
 							<button type="button" 
-						  	class="btn btn-outline-primary">
+						  	class="btn btn-primary">
 								Continuar comprando
 							</button>
 							</a>
 							<button type="button" 
-						  	class="btn btn-outline-primary">
+						  	class="btn btn-primary">
 								Finalizar Pedido
 							</button>
 
 						  	<a href="{% url 'dashboard_client:cancel_orderImpress' data.order.id %}">
 						  	<button type="button" 
-						  	class="btn btn-outline-primary">
+						  	class="btn btn-danger">
 								Cancelar
 							</button>
 							</a>

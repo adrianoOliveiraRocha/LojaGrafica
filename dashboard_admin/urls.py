@@ -28,4 +28,5 @@ urlpatterns = [
 
 	path('novo_servico_impressao', views.new_impress_service,
 		name='new_impress_service'),
+	path('detalhes_do_pedido/<int:oi_id>', views.detail_oi, name='datail_oi'),
 ]

@@ -13,10 +13,11 @@
 {% endfor %}
 {% endif %}
 <div class="container-fluid">
-	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
+	<div class="row" style="margin: 5%;">
+		<div class="col-sm-6">
+
 			<div class="page-header">
-			    <h1>Enviar Logo</h1>
+			    <h3>Já tenho minha arte pronta e gostaria de enviá-la agora</h3>
 			</div>
 			{% for error in form.non_field_errors %}
 			<div class="alert alert-danger">
@@ -28,9 +29,6 @@
 			{% csrf_token %}
 			    <fieldset>
 			        <div class="form-group {% if form.art.erros %} has-error {% endif %}">
-			          <label for="{{ form.art.auto_id }}" class="col-md-3 control-label">
-			              Logo
-			          </label>
 			          <div class="col-md-9">
 			            {% render_field form.art class="form-control" %}
 			            {% for error in form.art.errors %}
@@ -47,9 +45,68 @@
 			    </fieldset>
 			</form>
 		</div>
+		<div class="col-sm-6">
+			<div class="panel">
+				<div class="page-header">
+					<h3>Eu quero solicitar a criação da arte</h3>
+				    <button class="btn btn-primary"
+				    onclick="solicitation(1);" id="btn_solicitation">
+			    		Solicitar agora
+			    	</button>	
+				</div>
+				<div class="panel-body" style="margin: 3%; visibility: hidden;"
+				id="solicitation">
+					<form method="post"
+					action="{% url 'dashboard_client:confirm_solicitation' %}">
+					{% csrf_token %}
+
+					<input type="hidden" name="orderItemImpress_id"
+					value="{{ orderItemImpress.id }}">
+					
+						<table class="table">
+							<tr>
+								<td>Valor R$</td>
+								<td>{{ serviceImpress.value_creation_art }}</td>
+							</tr>
+							<tr>
+								<td>Prazo de entrega</td>
+								<td>
+									{% if serviceImpress.deadline %}
+									{{ serviceImpress.deadline }} dias
+									{% else %}
+									<i style="color: red;">Nao definido</i>
+									{% endif %}
+								</td>		
+							</tr>
+							<tr>
+								<td>Observções</td>
+								<td>{{ form.observations }}</td>
+							</tr>
+							<tr>
+								<tr>
+									<td>
+										<button type="submit" class="btn btn-primary">
+											Confirmar
+										</button>
+									</td>
+									<td>
+										<button class="btn btn-danger" onclick="solicitation(0);">
+											Cancelar
+										</button>
+									</td>
+								</tr>
+							</tr>
+						</table>
+					</form>
+					 
+				</div>
+			    
+			</div>
+			<div>
+				
+			</div>
+		</div>
 	</div>
 </div>
-<p>
-	{{ form.errors }}
-</p>
+
 {% endblock %}

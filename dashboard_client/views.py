@@ -115,12 +115,30 @@ def send_logo(request, item_id):
 			return HttpResponseRedirect(reverse('dashboard_client:index'))
 	else:
 		orderItemImpressForm = OrderItemImpressForm(initial=data)
-
+		serviceImpress = ServiceImpress.objects.get(id=orderItemImpress.service.id)
 	context = {
 	'form': orderItemImpressForm,
+	'orderItemImpress': orderItemImpress,
+	'serviceImpress': serviceImpress,
 	}
 	return render(request, 'dashboard_client/insert_file.html', context)
 
+
+def confirm_solicitation(request):
+	orderItemImpressForm = OrderItemImpressForm(request.POST) 
+	if orderItemImpressForm.is_valid():
+		from datetime import date
+		orderItemImpress = \
+		OrderItemImpress.objects.get(id=request.POST.get('orderItemImpress_id'))
+		orderItemImpress.creation_art_solicited = True
+		orderItemImpress.observations = \
+		orderItemImpressForm.cleaned_data['observations']
+		orderItemImpress.date_solicitation = date.today()
+		orderItemImpress.save()
+		return HttpResponseRedirect(reverse('dashboard_client:index'))
+	else:
+		# return HttpResponseRedirect(reverse('dashboard_client:index'))
+		return HttpResponse(form.errors)
 
 # delivery address is the same?
 @login_required
@@ -146,3 +164,6 @@ def save_address_delivery(request):
 	orderImpress.estado_delivery = request.POST.get('estado')
 	orderImpress.save()
 	return HttpResponseRedirect(reverse('dashboard_client:index'))
+
+
+

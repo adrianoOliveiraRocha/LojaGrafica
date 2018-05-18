@@ -1,0 +1,161 @@
+{% extends 'dashboard_admin/index.html' %}
+
+{% block extra %}
+{% load da_tags %}
+{% endblock %}
+
+{% block central_column %}
+<div class="col-sm-9">
+{% block dashboard_title %}
+<h5>Área Administrativa -> Pedidos de Impressão -> Detalhes do 
+Pedido</h5>
+{% endblock %}
+<table class="table">
+	<tr>
+		<td>Data</td>
+		<td>{{ orderimpress.date }}</td>
+	</tr>
+	<tr>
+		<td>Valor R$</td>
+		<td>{{ orderimpress.value }}</td>
+	</tr>
+	<tr>
+		<td>Status</td>
+		<td>{% show_status orderimpress.status %}</td>
+	</tr>
+	<tr>
+		<td>Cliente</td>
+		<td>{{ orderimpress.user }}</td>
+		<td>
+			<button type="button" class="btn btn-primary" data-toggle="modal" 	data-target="#myModal">
+    			Informações do Cliente
+  			</button>
+			
+		</td>
+	</tr>
+</table>
+<h5>Ítens do Pedido</h5>
+<table class="table">
+	{% for item in itens_list %}
+	<tr>
+		<td>Descrição</td>
+		<td>{{ item.service }}</td>
+	</tr>
+	<tr>
+		<td>Arte</td>
+		<td>
+			{% if item.art %}
+			<img src="{{ item.art.url }}">
+			{% else %}
+				{% if item.creation_art_solicited %}
+				<strong>Solicitado</strong> em {{ item.date_solicitation }}
+				{% else %}
+				<i style="color: red">Não enviado</i>
+				{% endif %}
+			{% endif %}
+		</td>
+	</tr>
+	{% endfor %}
+</table>
+
+<h5>Endereço de entrega</h5>
+{% if orderimpress.delivery_address_is_the_same == True %}
+<table class="table">
+	<tr>
+		<td>Logradouro</td>
+		<td>{{ orderimpress.user.logradouro }}</td>
+	</tr>
+	<tr>
+		<td>Número</td>
+		<td>{{ orderimpress.user.numero }}</td>
+	</tr>
+	<tr>
+		<td>CEP</td>
+		<td>{{ orderimpress.user.cep }}</td>
+	</tr>
+	<tr>
+		<td>Complemento</td>
+		<td>{{ orderimpress.user.complemento }}</td>
+	</tr>
+	<tr>
+		<td>Bairro</td>
+		<td>{{ orderimpress.user.bairro }}</td>
+	</tr>
+	<tr>
+		<td>Estado</td>
+		<td>{{ orderimpress.user.estado }}</td>
+	</tr>
+	
+</table>
+{% else %}
+<table class="table">
+	<tr>
+		<td>Logradouro</td>
+		<td>{{ orderimpress.logradouro_delivery }}</td>
+	</tr>
+	<tr>
+		<td>Número</td>
+		<td>{{ orderimpress.numero_delivery }}</td>
+	</tr>
+	<tr>
+		<td>CEP</td>
+		<td>{{ orderimpress.cep_delivery }}</td>
+	</tr>
+	<tr>
+		<td>Complemento</td>
+		<td>{{ orderimpress.complemento_delivery }}</td>
+	</tr>
+	<tr>
+		<td>Bairro</td>
+		<td>{{ orderimpress.bairro_delivery }}</td>
+	</tr>
+	<tr>
+		<td>Estado</td>
+		<td>{{ orderimpress.estado_delivery }}</td>
+	</tr>
+	
+</table>
+{% endif %}
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+<div class="modal-dialog">
+  <div class="modal-content">
+  
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <h4 class="modal-title">Informações do Cliente</h4>
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    
+    <!-- Modal body -->
+    <div class="modal-body">
+      <table class="table">
+      	<tr>
+      		<td>E-Mail</td>
+      		<td>{{ orderimpress.user.email }}</td>
+      	</tr>
+      	<tr>
+      		<td>Telefone</td>
+      		<td>
+      			{% if orderimpress.user.telefone %}
+      			{{ orderimpress.user.telefone }}
+      			{% else %}
+      			Não informado
+      			{% endif %}
+      		</td>
+      	</tr>
+      </table>
+    </div>
+    
+    <!-- Modal footer -->
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    </div>
+    
+  </div>
+</div>
+</div>
+
+</div>
+{% endblock %}

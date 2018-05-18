@@ -8,6 +8,7 @@ from core.forms import CategoryForm
 from django.urls import reverse
 from core.models import Service, Category, ServiceImpress
 from core.forms import CategoryForm, ServiceForm
+from dashboard_client.models import OrderItemImpress
 
 
 @login_required
@@ -229,3 +230,13 @@ def new_impress_service(request):
 		else:
 			messages.error(request, form.errors)
 			return render(request, 'dashboard_admin/new_impress_service.html', context)
+
+@login_required
+def detail_oi(request, oi_id):
+	orderimpress = OrderImpress.objects.get(id=oi_id)
+	itens_list = OrderItemImpress.objects.filter(order_id=oi_id)
+	context = {
+		'orderimpress': orderimpress,
+		'itens_list': itens_list}
+
+	return render(request, 'dashboard_admin/detail_oi.html', context)

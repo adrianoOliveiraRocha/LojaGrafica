@@ -50,6 +50,7 @@ class Service(models.Model):
 		blank=True, max_digits=8, decimal_places=2)
 	category = models.ForeignKey(Category, on_delete=models.CASCADE, 
 		null=True, blank=True)
+	
 
 	class Meta:
 		verbose_name = 'Serviço'
@@ -93,6 +94,7 @@ class Service(models.Model):
 class ServiceImpress(Service):
 	value_creation_art = models.DecimalField(verbose_name='Valor',
 		max_digits=8, decimal_places=2)
-	deadline = models.PositiveSmallIntegerField('Prazo para criação de arte',
+	deadline = models.PositiveSmallIntegerField('Prazo em dias para criação de arte',
 		null=True, blank=True)
+	
 	

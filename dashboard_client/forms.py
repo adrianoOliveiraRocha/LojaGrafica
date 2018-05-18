@@ -2,7 +2,8 @@ from django import forms
 
 
 class OrderItemImpressForm(forms.Form):
-	art = forms.FileField()
+	art = forms.FileField(required=False)
+	observations = forms.CharField(widget=forms.Textarea, required=False) 
 
 
 class OrderItemArtForm(forms.Form):

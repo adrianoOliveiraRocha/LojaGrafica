@@ -149,6 +149,14 @@ class OrderItemImpress(models.Model):
 		verbose_name='Logo', null=True, blank=True)
 	order = models.ForeignKey(OrderImpress, on_delete=models.CASCADE,
 		related_name="itens",)
+	creation_art_solicited = models.BooleanField(
+		verbose_name='Criação de arte solicitada',
+		default=False,
+		blank=True)
+	observations = models.TextField('Observações', max_length=300,
+		blank=True, null=True)
+	date_solicitation = models.DateTimeField('Data de solicitação da arte',
+		blank=True, null=True)
 
 	class Meta:
 		verbose_name = 'Impressão'
