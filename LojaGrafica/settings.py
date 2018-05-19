@@ -85,8 +85,8 @@ WSGI_APPLICATION = 'LojaGrafica.wsgi.application'
 # pip install mysqlclient
 
 # backup and restore database:
-# mysqldump -u root -p lojagrafica > lojagrafica_backup.sql
-# mysql -u root -p lojagrafica < lojagrafica_backup.sql
+# mysqldump -u root -p loja_grafica > loja_grafica_backup.sql
+# mysql -u root -p loja_grafica < loja_grafica_backup.sql
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
