@@ -224,6 +224,7 @@ def new_impress_service(request):
 			service.value = Service.change_for_decimal(form.cleaned_data['value'])
 			service.value_creation_art = \
 			Service.change_for_decimal(form.cleaned_data['value_creation_art'])
+			service.deadline = form.cleaned_data['deadline']
 			service.save()
 			messages.success(request, 'Novo serviço criado com sucesso!')	
 			return HttpResponseRedirect(reverse('dashboard_admin:all_services'))

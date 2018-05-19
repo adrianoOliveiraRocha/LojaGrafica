@@ -15,3 +15,4 @@ class ServiceForm(forms.Form):
 	value = forms.CharField()
 	value_creation_art = forms.CharField(label='Valor para criação de arte',
 		required=False)
+	deadline = forms.IntegerField(label='Prazo em dias', required=False)

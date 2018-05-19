@@ -91,6 +91,18 @@
 	                <span class="help-block">{{ error }}</span>
 	            {% endfor %}
 	          </div>
+	        </div>
+
+	        <div class="form-group {% if form.deadline.erros %} has-error {% endif %}">
+	          <label for="{{ form.deadline.auto_id }}" class="col-md-3 control-label">
+	              Prazo em dias
+	          </label>
+	          <div class="col-md-9">
+	            {% render_field form.deadline class="form-control" %}
+	            {% for error in form.deadline.errors %}
+	                <span class="help-block">{{ error }}</span>
+	            {% endfor %}
+	          </div>
 	        </div> 
 
 	        <div class="form-group">

@@ -31,7 +31,7 @@ def insert_cart(request, service_id):
 	except:
 		service = Service.objects.get(id=service_id)
 
-	if service.__class__.__name__ == 'ServiceImpress':
+	if isinstance(service, ServiceImpress):
 		orderImpress = OrderImpress.getLastOrderImpress(request.user.id)
 		if orderImpress is None or orderImpress.status != 'EA':
 		 	# to create other OrderImpress
