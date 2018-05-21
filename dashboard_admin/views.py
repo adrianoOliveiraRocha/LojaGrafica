@@ -10,6 +10,7 @@ from core.models import Service, Category, ServiceImpress
 from core.forms import CategoryForm, ServiceForm
 from dashboard_client.models import OrderItemImpress
 from accounts.models import User
+from dashboard_client.models import OrderArt, OrderItemArt
 
 
 @login_required
@@ -261,3 +262,24 @@ def client_detail(request, client_id):
 		context)
 
 
+@login_required
+def artcreation_admin(request):
+	orderart_list = OrderArt.objects.all()
+	context = {'orderart_list': orderart_list} 
+	if request.user.is_staff:
+		return render(request, 'dashboard_admin/artcreation_admin.html', context)
+	else:
+		msg = "Você não tem permissão para acessar essa área"
+		return render(request, 'accounts/errors.html', {'msg': msg})
+
+
+@login_required
+def detail_oa(request, oa_id):
+	print('detail_oa: ', oa_id)
+	orderart = OrderArt.objects.get(id=oa_id)
+	itens_list = OrderItemArt.objects.filter(orderArt=oa_id)
+	context = {
+		'orderart': orderart,
+		'itens_list': itens_list}
+
+	return render(request, 'dashboard_admin/detail_oa.html', context)

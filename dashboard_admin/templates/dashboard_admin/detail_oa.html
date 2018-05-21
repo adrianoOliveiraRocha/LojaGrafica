@@ -1,0 +1,204 @@
+{% extends 'dashboard_admin/index.html' %}
+
+{% block extra %}
+{% load da_tags %}
+{% endblock %}
+
+{% block central_column %}
+<div class="col-sm-9">
+{% block dashboard_title %}
+<h5>Área Administrativa -> Pedidos de Criação de Arte -> Detalhes do 
+Pedido</h5>
+{% endblock %}
+
+<div class="container" style="width: 100%">
+  {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-success alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          {{ message }}
+        </div>
+    {% endfor %}
+  {% endif %}
+</div>
+
+<table class="table">
+	<tr>
+		<td>Data</td>
+		<td>{{ orderart.date }}</td>
+	</tr>
+	<tr>
+		<td>Valor R$</td>
+		<td>{{ orderart.value }}</td>
+	</tr>
+	<tr>
+		<td>Status</td>
+		<td>{% show_status orderart.status %}</td>
+	</tr>
+	<tr>
+		<td>Cliente</td>
+		<td>{{ orderart.user }}</td>
+		<td>
+			<button type="button" class="btn btn-primary" data-toggle="modal" 	data-target="#myModal">
+    			Informações do Cliente
+  			</button>
+			
+		</td>
+	</tr>
+</table>
+<h5>Ítens do Pedido</h5>
+<table class="table">
+	{% for item in itens_list %}
+	<tr>
+		<td>Descrição</td>
+		<td>{{ item.service }}</td>
+	</tr>
+	<tr>
+		<td>Valor R$</td>
+		<td>{{ item.service.value }}</td>
+	</tr>
+	<tr>
+		<td colspan="2"></td>
+	</tr>
+	<tr>
+		<td>Imagem Exemplo 1</td>
+		{% if item.image_example1 %}
+		<td>
+			<a href="{{ item.image_example1.url }}" download>
+				{{ item.image_example1 }}
+			</a>
+		</td>
+		{% else %}
+		<td><i>Não Enviado</i></td>
+		{% endif %}
+	</tr>
+	<tr>
+		<td>Imagem Exemplo 2</td>
+		{% if item.image_example2 %}
+		<td>
+			<a href="{{ item.image_example2.url }}" download>
+				{{ item.image_example2 }}
+			</a>
+		</td>
+		{% else %}
+		<td><i>Não Enviado</i></td>
+		{% endif %}
+	</tr>
+	<tr>
+		<td>Imagem Exemplo 3</td>
+		{% if item.image_example3 %}
+		<td>
+			<a href="{{ item.image_example3.url }}" download>
+				{{ item.image_example3 }}
+			</a>
+		</td>
+		{% else %}
+		<td><i>Não Enviado</i></td>
+		{% endif %}
+	</tr>
+	<tr>
+		<td>Imagem Exemplo 4</td>
+		{% if item.image_example4 %}
+		<td>
+			<a href="{{ item.image_example4.url }}" download>
+				{{ item.image_example4 }}
+			</a>
+		</td>
+		{% else %}
+		<td><i>Não Enviado</i></td>
+		{% endif %}
+	</tr>
+	<tr>
+		<td colspan="2"></td>
+	</tr>
+	<tr>
+		<td>Imagem Para Aprovação</td>
+		{% if item.image_view %}
+		<td>
+			<img src="{{ item.image_view.url }}">
+		</td>
+		<td>
+			<a href="{% url 'checkout:send_image_view' item.id orderart.id %}">
+				<input type="button" class="btn btn-primary" value="Alterar">
+			</a>
+		</td>
+		{% else %}
+		<td><i>Não Enviado</i></td>
+		<td>
+			<a href="#">
+				<input type="button" class="btn btn-primary" value="Enviar">
+			</a>
+		</td>
+		{% endif %}
+	</tr>
+	{% if item.image_view %}
+	<tr>
+		{% if item.approved %}
+		<td style="color: blue">Aprovado</td>
+		{% else %}
+		<td style="color: red">Ainda não aprovado</td>
+		{% endif %}
+		</td>
+	</tr>
+	<tr>
+		<td>Observações</td>
+		<td>
+			{% if item.note %}
+				{{ item.note }}
+			{% else %}
+				Nenhum comentário foi enviado
+			{% endif %}
+		</td>
+	</tr>
+	{% endif %}
+	{% endfor %}
+</table>
+
+
+<!-- image View -->
+
+
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+<div class="modal-dialog">
+  <div class="modal-content">
+  
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <h4 class="modal-title">Informações do Cliente</h4>
+      <button type="button" class="close" data-dismiss="modal">&times;
+      </button>
+    </div>
+    
+    <!-- Modal body -->
+    <div class="modal-body">
+      <table class="table">
+      	<tr>
+      		<td>E-Mail</td>
+      		<td>{{ orderart.user.email }}</td>
+      	</tr>
+      	<tr>
+      		<td>Telefone</td>
+      		<td>
+      			{% if orderart.user.telefone %}
+      			{{ orderart.user.telefone }}
+      			{% else %}
+      			Não informado
+      			{% endif %}
+      		</td>
+      	</tr>
+      </table>
+    </div>
+    
+    <!-- Modal footer -->
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    </div>
+    
+  </div>
+</div>
+</div>
+
+</div>
+{% endblock %}
