@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
@@ -166,4 +166,97 @@ def save_address_delivery(request):
 	return HttpResponseRedirect(reverse('dashboard_client:index'))
 
 
+@login_required
+def send_imageexample1(request, oia_id):
+	print(oia_id)
+	context = {}
+	orderItemArtForm = OrderItemArtForm(request.POST, request.FILES)
+	context.update({'form': orderItemArtForm})
+	if request.method == 'GET':
+		return render(request, 'dashboard_client/send_image_example.html',
+			context)
+	else:
+	 	if orderItemArtForm.is_valid():
+	 		orderItemArt = OrderItemArt.objects.get(id=oia_id)
+	 		orderItemArt.image_example1 = \
+	 		orderItemArtForm.cleaned_data['image']
+	 		orderItemArt.save()
+	 		messages.add_message(request, messages.INFO,
+			"Arquivo enviado com sucesso!")
+	 	else:
+	 		print(orderItemArtForm.errors)
+	 		return HttpResponse('form invalid')
+
+	 	return redirect('dashboard_client:index_art')
+
+
+@login_required
+def send_imageexample2(request, oia_id):
+	context = {}
+	orderItemArtForm = OrderItemArtForm(request.POST, request.FILES)
+	context.update({'form': orderItemArtForm})
+	if request.method == 'GET':
+		return render(request, 'dashboard_client/send_image_example.html',
+			context)
+	else:
+	 	if orderItemArtForm.is_valid():
+	 		print('form is valid')
+	 		print(orderItemArtForm.cleaned_data['image'])
+	 		orderItemArt = OrderItemArt.objects.get(id=oia_id)
+	 		orderItemArt.image_example2 = \
+	 		orderItemArtForm.cleaned_data['image']
+	 		orderItemArt.save()
+	 		messages.add_message(request, messages.INFO,
+			"Arquivo enviado com sucesso!")
+	 	else:
+	 		print(orderItemArtForm.errors)
+	 		return HttpResponse('form invalid')
+
+	 	return redirect('dashboard_client:index_art')
+
+
+@login_required
+def send_imageexample3(request, oia_id):
+	context = {}
+	orderItemArtForm = OrderItemArtForm(request.POST, request.FILES)
+	context.update({'form': orderItemArtForm})
+	if request.method == 'GET':
+		return render(request, 'dashboard_client/send_image_example.html',
+			context)
+	else:
+	 	if orderItemArtForm.is_valid():
+	 		orderItemArt = OrderItemArt.objects.get(id=oia_id)
+	 		orderItemArt.image_example3 = \
+	 		orderItemArtForm.cleaned_data['image']
+	 		orderItemArt.save()
+	 		messages.add_message(request, messages.INFO,
+			"Arquivo enviado com sucesso!")
+	 	else:
+	 		print(orderItemArtForm.errors)
+	 		return HttpResponse('form invalid')
+
+	 	return redirect('dashboard_client:index_art')
+
+
+@login_required
+def send_imageexample4(request, oia_id):
+	context = {}
+	orderItemArtForm = OrderItemArtForm(request.POST, request.FILES)
+	context.update({'form': orderItemArtForm})
+	if request.method == 'GET':
+		return render(request, 'dashboard_client/send_image_example.html',
+			context)
+	else:
+	 	if orderItemArtForm.is_valid():
+	 		orderItemArt = OrderItemArt.objects.get(id=oia_id)
+	 		orderItemArt.image_example4 = \
+	 		orderItemArtForm.cleaned_data['image']
+	 		orderItemArt.save()
+	 		messages.add_message(request, messages.INFO,
+			"Arquivo enviado com sucesso!")
+	 	else:
+	 		print(orderItemArtForm.errors)
+	 		return HttpResponse('form invalid')
+
+	 	return redirect('dashboard_client:index_art')
 

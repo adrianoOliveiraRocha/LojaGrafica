@@ -36,6 +36,16 @@ class Category(models.Model):
 			category_choices[category.id] = category.name
 		return category_choices
 
+	@staticmethod
+	def get_all_clients():
+		""" get all users that is not staff """
+		all_clients = []
+		users = User.objects.all()
+		for user in users:
+			if not user.is_staff:
+				all_clients.append(user)
+		return all_clients
+
 # criation art service
 class Service(models.Model):
 	TYPE_CHOICES = (

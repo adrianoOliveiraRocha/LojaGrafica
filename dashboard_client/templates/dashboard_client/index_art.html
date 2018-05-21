@@ -42,9 +42,9 @@
 					<td>Imagem Exemplo 1</td>
 					<td>
 						{% if orderItemArt.image_example1 %}
-						<a href="#">Alterar</a>
+						<a href="{% url 'dashboard_client:send_imageexample1' orderItemArt.id %}">Alterar</a>
 						{% else %}
-						<a href="#">
+						<a href="{% url 'dashboard_client:send_imageexample1' orderItemArt.id %}">
 							Enviar
 						</a>
 						{% endif %}
@@ -54,9 +54,9 @@
 					<td>Imagem Exemplo 2</td>
 					<td>
 						{% if orderItemArt.image_example2 %}
-						<a href="#">Alterar</a>
+						<a href="{% url 'dashboard_client:send_imageexample2' orderItemArt.id %}">Alterar</a>
 						{% else %}
-						<a href="#">
+						<a href="{% url 'dashboard_client:send_imageexample2' orderItemArt.id %}">
 							Enviar
 						</a>
 						{% endif %}
@@ -66,9 +66,9 @@
 					<td>Imagem Exemplo 3</td>
 					<td>
 						{% if orderItemArt.image_example3 %}
-						<a href="#">Alterar</a>
+						<a href="{% url 'dashboard_client:send_imageexample3' orderItemArt.id %}">Alterar</a>
 						{% else %}
-						<a href="#">
+						<a href="{% url 'dashboard_client:send_imageexample3' orderItemArt.id %}">
 							Enviar
 						</a>
 						{% endif %}
@@ -78,9 +78,9 @@
 					<td>Imagem Exemplo 4</td>
 					<td>
 						{% if orderItemArt.image_example4 %}
-						<a href="#">Alterar</a>
+						<a href="{% url 'dashboard_client:send_imageexample4' orderItemArt.id %}">Alterar</a>
 						{% else %}
-						<a href="#">
+						<a href="{% url 'dashboard_client:send_imageexample4' orderItemArt.id %}">
 							Enviar
 						</a>
 						{% endif %}

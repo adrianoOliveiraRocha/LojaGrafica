@@ -9,5 +9,5 @@ class OrderItemImpressForm(forms.Form):
 class OrderItemArtForm(forms.Form):
 	image = forms.ImageField(required=False)
 	note = forms.CharField(widget=forms.Textarea, required=False)
-	image_view = forms.ImageField(label='Imagem Para Aprovação', required=True)
+	image_view = forms.ImageField(label='Imagem Para Aprovação', required=False)
 		

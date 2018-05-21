@@ -9,6 +9,7 @@ from django.urls import reverse
 from core.models import Service, Category, ServiceImpress
 from core.forms import CategoryForm, ServiceForm
 from dashboard_client.models import OrderItemImpress
+from accounts.models import User
 
 
 @login_required
@@ -230,7 +231,8 @@ def new_impress_service(request):
 			return HttpResponseRedirect(reverse('dashboard_admin:all_services'))
 		else:
 			messages.error(request, form.errors)
-			return render(request, 'dashboard_admin/new_impress_service.html', context)
+			return render(request, 'dashboard_admin/new_impress_service.html',
+				context)
 
 @login_required
 def detail_oi(request, oi_id):
@@ -241,3 +243,21 @@ def detail_oi(request, oi_id):
 		'itens_list': itens_list}
 
 	return render(request, 'dashboard_admin/detail_oi.html', context)
+
+
+@login_required
+def all_clients(request):
+	all_clients = User.get_all_clients()
+	context = {'all_clients': all_clients}
+	return render(request, 'dashboard_admin/all_clients.html',
+		context)
+
+
+@login_required
+def client_detail(request, client_id):
+	client = User.objects.get(id=client_id)
+	context = {'client': client}
+	return render(request, 'dashboard_admin/client_detail.html',
+		context)
+
+

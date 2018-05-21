@@ -29,4 +29,8 @@ urlpatterns = [
 	path('novo_servico_impressao', views.new_impress_service,
 		name='new_impress_service'),
 	path('detalhes_do_pedido/<int:oi_id>', views.detail_oi, name='datail_oi'),
+	path('clientes_cadastrados', views.all_clients, name='all_clients'),
+	path('detalhes_cliente/<int:client_id>', views.client_detail,
+		name='client_detail'),
+		
 ]
