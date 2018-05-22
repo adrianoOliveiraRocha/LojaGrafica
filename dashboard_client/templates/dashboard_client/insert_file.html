@@ -56,8 +56,8 @@
 				</div>
 				<div class="panel-body" style="margin: 3%; visibility: hidden;"
 				id="solicitation">
-					<form method="post"
-					action="{% url 'dashboard_client:confirm_solicitation' %}">
+					<form method="post" enctype="multipart/form-data">
+
 					{% csrf_token %}
 
 					<input type="hidden" name="orderItemImpress_id"

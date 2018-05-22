@@ -19,7 +19,6 @@ def index(request):
 @login_required
 def index_art(request):
 	""" the index show the order impress """
-	print('\n', OrderArt.get_orderArt_data(request.user.id), '\n')
 	context = {'data': OrderArt.get_orderArt_data(request.user.id)}
 	return render(request, 'dashboard_client/index_art.html', context)
 
@@ -99,21 +98,50 @@ def cancel_orderImpress(request, oi_id):
 # impress
 @login_required
 def send_logo(request, item_id):
+	print('test programmer speak english')
 	orderItemImpress = OrderItemImpress.objects.get(id=item_id)
 	data = {'service': orderItemImpress.service,
 	'order': orderItemImpress.order,}
 	if request.method == 'POST':
-		
+		from datetime import date
 		orderItemImpressForm = OrderItemImpressForm(request.POST,
 			request.FILES)
+		orderItemImpress.creation_art_solicited = True
+		orderItemImpress.date_solicitation = date.today()
 
 		if orderItemImpressForm.is_valid():
+			orderItemImpress.observations = \
+			orderItemImpressForm.cleaned_data['observations']
+			
 			orderItemImpress.art = orderItemImpressForm.cleaned_data['art']
+			orderItemImpress.model = orderItemImpressForm.cleaned_data['model']
+			
+			orderItemImpress.image_example1 = \
+			orderItemImpressForm.cleaned_data['image_example1']
+			
+			orderItemImpress.image_example2 = \
+			orderItemImpressForm.cleaned_data['image_example2']
+
+			orderItemImpress.image_example3 = \
+			orderItemImpressForm.cleaned_data['image_example3']
+
+			orderItemImpress.image_example4 = \
+			orderItemImpressForm.cleaned_data['image_example4']
+
 			orderItemImpress.save()
+
 			messages.add_message(request, messages.INFO,
 			"Arquivo enviado com sucesso!")
+
 			return HttpResponseRedirect(reverse('dashboard_client:index'))
+
+		else:
+			messages.add_message(request, messages.INFO,
+			"Não foi possível realizar esssa operação")
+			print(form.errors)
+			return HttpResponse(form.errors)
 	else:
+		print('method get')
 		orderItemImpressForm = OrderItemImpressForm(initial=data)
 		serviceImpress = ServiceImpress.objects.get(id=orderItemImpress.service.id)
 	context = {
@@ -122,23 +150,6 @@ def send_logo(request, item_id):
 	'serviceImpress': serviceImpress,
 	}
 	return render(request, 'dashboard_client/insert_file.html', context)
-
-
-def confirm_solicitation(request):
-	orderItemImpressForm = OrderItemImpressForm(request.POST) 
-	if orderItemImpressForm.is_valid():
-		from datetime import date
-		orderItemImpress = \
-		OrderItemImpress.objects.get(id=request.POST.get('orderItemImpress_id'))
-		orderItemImpress.creation_art_solicited = True
-		orderItemImpress.observations = \
-		orderItemImpressForm.cleaned_data['observations']
-		orderItemImpress.date_solicitation = date.today()
-		orderItemImpress.save()
-		return HttpResponseRedirect(reverse('dashboard_client:index'))
-	else:
-		# return HttpResponseRedirect(reverse('dashboard_client:index'))
-		return HttpResponse(form.errors)
 
 # delivery address is the same?
 @login_required
