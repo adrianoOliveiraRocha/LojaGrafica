@@ -266,8 +266,33 @@ def send_imageexample4(request, oia_id):
 	 		messages.add_message(request, messages.INFO,
 			"Arquivo enviado com sucesso!")
 	 	else:
-	 		print(orderItemArtForm.errors)
 	 		return HttpResponse('form invalid')
 
 	 	return redirect('dashboard_client:index_art')
 
+
+@login_required
+def send_model(request, oia_id):
+
+	orderItemArtForm = OrderItemArtForm(request.POST, request.FILES)
+	context = {'form': orderItemArtForm}
+
+	if request.method == 'GET':
+		 return render(request, 'dashboard_client/send_model.html',
+			context)
+	else:
+		if orderItemArtForm.is_valid():
+			orderItemArt = OrderItemArt.objects.get(id=oia_id)
+			
+			orderItemArt.model = \
+			orderItemArtForm.cleaned_data['model']
+
+			orderItemArt.save()
+
+			messages.add_message(request, messages.INFO,
+				"Arquivo enviado com sucesso!")
+
+		else:
+			return HttpResponse(form.errors)
+
+		return redirect('dashboard_client:index_art')

@@ -192,6 +192,8 @@ class OrderArt(models.Model):
 	status = models.CharField('Status do Pedido', max_length=2,
 		choices=STATUS_CHOICE, default='EA')
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	model = models.FileField(upload_to='orderArt_models', blank=True,
+		null=True)
 
 	def __str__(self):
 		return 'Feito por {} em {}'.format(self.user, self.date)

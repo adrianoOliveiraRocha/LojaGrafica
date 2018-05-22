@@ -13,6 +13,7 @@ class OrderItemImpressForm(forms.Form):
 
 class OrderItemArtForm(forms.Form):
 	image = forms.ImageField(required=False)
+	model = forms.FileField(label='Modelo', required=False)
 	note = forms.CharField(widget=forms.Textarea, required=False)
-	image_view = forms.ImageField(label='Imagem Para Aprovação', required=False)
+	
 		

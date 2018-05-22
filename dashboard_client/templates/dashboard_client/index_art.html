@@ -21,8 +21,6 @@
         {% endfor %}
       {% endif %}
 	</div>
-
-	
 	{% if data.orderArt %}	
 		<h3>
 			Data do Pedido: {{ data.orderArt.date }}
@@ -36,6 +34,20 @@
 					<td>Descrição</td>
 					<td>
 						{{ orderItemArt.service.description }}
+					</td>
+				</tr>
+				<tr>
+					<td>Modelo</td>
+					<td>
+						{% if orderItemArt.model %}
+						<a href="{% url 'dashboard_client:send_model' orderItemArt.id %}">
+							Alterar
+						</a>
+						{% else %}
+						<a href="{% url 'dashboard_client:send_model' orderItemArt.id %}">
+							Enviar
+						</a>
+						{% endif %}
 					</td>
 				</tr>
 				<tr>

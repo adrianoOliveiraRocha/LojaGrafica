@@ -60,6 +60,20 @@ Pedido</h5>
 	<tr>
 		<td colspan="2"></td>
 	</tr>
+
+	<tr>
+		<td>Modelo</td>
+		{% if item.model %}
+		<td>
+			<a href="{{ item.model.url }}" download>
+				{{ item.model }}
+			</a>
+		</td>
+		{% else %}
+		<td><i>Não Enviado</i></td>
+		{% endif %}
+	</tr>
+
 	<tr>
 		<td>Imagem Exemplo 1</td>
 		{% if item.image_example1 %}

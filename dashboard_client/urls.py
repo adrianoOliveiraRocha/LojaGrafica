@@ -16,6 +16,9 @@ urlpatterns = [
     path('salvar_dendereco_de_entrega', views.save_address_delivery, 
     	name='save_address_delivery'),
     
+    path('enviar_modelo/<int:oia_id>', views.send_model,
+        name='send_model'),
+
     path('enviar_imagem1/<int:oia_id>', views.send_imageexample1,
         name='send_imageexample1'),
     path('enviar_imagem2/<int:oia_id>', views.send_imageexample2,
