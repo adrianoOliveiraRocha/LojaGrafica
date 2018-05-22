@@ -157,6 +157,18 @@ class OrderItemImpress(models.Model):
 		blank=True, null=True)
 	date_solicitation = models.DateTimeField('Data de solicitação da arte',
 		blank=True, null=True)
+	# if the user require the art creation, he have send model
+	model = models.FileField(upload_to='order-item-impress',
+		verbose_name='Logo', null=True, blank=True)
+	# it is images examples for art creation
+	image_example1 = models.FileField(upload_to='image-example',
+		verbose_name='Imagem de Exemplo 1', null=True, blank=True)
+	image_example2 = models.FileField(upload_to='image-example',
+		verbose_name='Imagem de Exemplo 2', null=True, blank=True)
+	image_example3 = models.FileField(upload_to='image-example',
+		verbose_name='Imagem de Exemplo 3', null=True, blank=True)
+	image_example4 = models.FileField(upload_to='image-example',
+		verbose_name='Imagem de Exemplo 4', null=True, blank=True)
 
 	class Meta:
 		verbose_name = 'Impressão'
@@ -245,6 +257,8 @@ class OrderItemArt(models.Model):
 		related_name="items", null=True, blank=True)
 	note = models.TextField(verbose_name='Observações', null=True,
 		blank=True)
+	model = models.FileField(upload_to='order-item-impress',
+		verbose_name='Logo', null=True, blank=True)
 	
 	image_example1 = models.FileField(upload_to='image-example',
 		verbose_name='Imagem de Exemplo 1', null=True, blank=True)
@@ -255,12 +269,6 @@ class OrderItemArt(models.Model):
 	image_example4 = models.FileField(upload_to='image-example',
 		verbose_name='Imagem de Exemplo 4', null=True, blank=True)
 
-	image_view = models.ImageField(upload_to='image_view',
-		verbose_name='Imagem para Visualização', null=True, blank=True)
-	approved = models.BooleanField(
-		verbose_name='Aprovado',
-		default=False,
-		blank=True)
 	final_work = models.FileField(upload_to='final_work',
 		verbose_name='Trabalho Final', null=True, blank=True)
 

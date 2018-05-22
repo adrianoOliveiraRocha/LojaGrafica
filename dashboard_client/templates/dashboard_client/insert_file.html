@@ -69,14 +69,24 @@
 								<td>{{ serviceImpress.value_creation_art }}</td>
 							</tr>
 							<tr>
-								<td>Prazo de entrega</td>
-								<td>
-									{% if serviceImpress.deadline %}
-									{{ serviceImpress.deadline }} dias
-									{% else %}
-									<i style="color: red;">Nao definido</i>
-									{% endif %}
-								</td>		
+								<td>Enviar Modelo</td>
+								<td>{{ form.model }}</td>
+							</tr>
+							<tr>
+								<td>Imagem Exemplo 1</td>
+								<td>{{ form.image_example1 }}</td>
+							</tr>
+							<tr>
+								<td>Imagem Exemplo 2</td>
+								<td>{{ form.image_example2 }}</td>
+							</tr>
+							<tr>
+								<td>Imagem Exemplo 3</td>
+								<td>{{ form.image_example3 }}</td>
+							</tr>
+							<tr>
+								<td>Imagem Exemplo 4</td>
+								<td>{{ form.image_example4 }}</td>
 							</tr>
 							<tr>
 								<td>Observções</td>
