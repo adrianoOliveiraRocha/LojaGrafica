@@ -27,4 +27,10 @@ urlpatterns = [
         name='send_imageexample3'),
     path('enviar_imagem4/<int:oia_id>', views.send_imageexample4,
         name='send_imageexample4'),
+
+    path('deletar_item_pedido_arte/<int:oia_id>', views.delete_oia,
+        name='delete_oia'),
+    path('cancelar_pedido_arte/<int:oa_id>', views.cancel_orderArt,
+        name='cancel_orderArt'),
+    
 ]

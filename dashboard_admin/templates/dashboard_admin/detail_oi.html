@@ -80,7 +80,9 @@ Pedido</h5>
 		<td>Imagem exemplo 1</td>
 		<td>
 			{% if item.image_example1 %}
-			<td><img src="{{ item.image_example1.url }}"></td>
+			<a href="{{ item.image_example1.url }}" download>
+				{{ item.image_example1.url }}
+			</a>
 			{% else %}
 			<i style="color: red">Não enviado</i>
 			{% endif %}
@@ -90,7 +92,9 @@ Pedido</h5>
 		<td>Imagem exemplo 2</td>
 		<td>
 			{% if item.image_example2 %}
-			<td><img src="{{ item.image_example2.url }}"></td>
+			<a href="{{ item.image_example2.url }}" download>
+				{{ item.image_example2.url }}
+			</a>
 			{% else %}
 			<i style="color: red">Não enviado</i>
 			{% endif %}
@@ -100,7 +104,9 @@ Pedido</h5>
 		<td>Imagem exemplo 3</td>
 		<td>
 			{% if item.image_example3 %}
-			<td><img src="{{ item.image_example3.url }}"></td>
+			<a href="{{ item.image_example3.url }}" download>
+				{{ item.image_example3.url }}
+			</a>
 			{% else %}
 			<i style="color: red">Não enviado</i>
 			{% endif %}
@@ -110,7 +116,9 @@ Pedido</h5>
 		<td>Imagem exemplo 4</td>
 		<td>
 			{% if item.image_example4 %}
-			<td><img src="{{ item.image_example4.url }}"></td>
+			<a href="{{ item.image_example4.url }}" download>
+				{{ item.image_example4.url }}
+			</a>
 			{% else %}
 			<i style="color: red">Não enviado</i>
 			{% endif %}
@@ -125,27 +133,64 @@ Pedido</h5>
 <table class="table">
 	<tr>
 		<td>Logradouro</td>
-		<td>{{ orderimpress.user.logradouro }}</td>
+		<td>
+			{% if orderimpress.user.logradouro %}
+			{{ orderimpress.user.logradouro }}
+			{% else %}
+			<i style="color: red">Não definido</i>
+			{% endif %}
+		</td>
 	</tr>
 	<tr>
 		<td>Número</td>
-		<td>{{ orderimpress.user.numero }}</td>
+		<td>
+			{% if orderimpress.user.numero %}
+			{{ orderimpress.user.numero }}
+			{% else %}
+			<i style="color: red">Não definido</i>
+			{% endif %}
+		</td>
 	</tr>
 	<tr>
 		<td>CEP</td>
-		<td>{{ orderimpress.user.cep }}</td>
+		<td>
+			{% if orderimpress.user.cep %}
+			{{ orderimpress.user.cep }}
+			{% else %}
+			<i style="color: red">Não definido</i>
+			{% endif %}
+
+		</td>
 	</tr>
 	<tr>
 		<td>Complemento</td>
-		<td>{{ orderimpress.user.complemento }}</td>
+		<td>
+			{% if orderimpress.user.complemento %}
+			{{ orderimpress.user.complemento }}
+			{% else %}
+			<i style="color: red">Não definido</i>
+			{% endif %}			
+		</td>
 	</tr>
 	<tr>
 		<td>Bairro</td>
-		<td>{{ orderimpress.user.bairro }}</td>
+		<td>
+			{% if orderimpress.user.bairro %}
+			{{ orderimpress.user.bairro }}
+			{% else %}
+			<i style="color: red">Não definido</i>
+			{% endif %}
+		</td>
 	</tr>
 	<tr>
 		<td>Estado</td>
-		<td>{{ orderimpress.user.estado }}</td>
+		<td>
+			{% if orderimpress.user.estado %}
+			{{ orderimpress.user.estado }}
+			{% else %}
+			<i style="color: red">Não definido</i>
+			{% endif %}
+		</td>
 	</tr>
 	
 </table>
@@ -153,27 +198,63 @@ Pedido</h5>
 <table class="table">
 	<tr>
 		<td>Logradouro</td>
-		<td>{{ orderimpress.logradouro_delivery }}</td>
+		<td>
+			{% if orderimpress.logradouro_delivery %}
+			{{ orderimpress.logradouro_delivery }}
+			{% else %}
+			<i style="color: red">Não definido</i>
+			{% endif %}
+		</td>
 	</tr>
 	<tr>
 		<td>Número</td>
-		<td>{{ orderimpress.numero_delivery }}</td>
+		<td>
+			{% if orderimpress.numero_delivery %}
+			{{ orderimpress.numero_delivery }}
+			{% else %}
+			<i style="color: red">Não definido</i>
+			{% endif %}
+		</td>
 	</tr>
 	<tr>
 		<td>CEP</td>
-		<td>{{ orderimpress.cep_delivery }}</td>
+		<td>
+			{% if orderimpress.cep_delivery %}
+			{{ orderimpress.cep_delivery }}
+			{% else %}
+			<i style="color: red">Não definido</i>
+			{% endif %}
+		</td>
 	</tr>
 	<tr>
 		<td>Complemento</td>
-		<td>{{ orderimpress.complemento_delivery }}</td>
+		<td>
+			{% if orderimpress.complemento_delivery %}
+			{{ orderimpress.complemento_delivery }}
+			{% else %}
+			<i style="color: red">Não definido</i>
+			{% endif %}
+		</td>
 	</tr>
 	<tr>
 		<td>Bairro</td>
-		<td>{{ orderimpress.bairro_delivery }}</td>
+		<td>
+			{% if orderimpress.bairro_delivery %}
+			{{ orderimpress.bairro_delivery }}
+			{% else %}
+			<i style="color: red">Não definido</i>
+			{% endif %}
+		</td>
 	</tr>
 	<tr>
 		<td>Estado</td>
-		<td>{{ orderimpress.estado_delivery }}</td>
+		<td>
+			{% if orderimpress.estado_delivery %}
+			{{ orderimpress.estado_delivery }}
+			{% else %}
+			<i style="color: red">Não definido</i>
+			{% endif %}
+		</td>
 	</tr>
 	
 </table>

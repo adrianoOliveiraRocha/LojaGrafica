@@ -110,7 +110,12 @@
 				<tr><td></td></tr>
 				<tr>
 					<td colspan="2">
-						<a href="#">Deletar</a>
+						<a href="{% url 'dashboard_client:delete_oia' orderItemArt.id %}" 
+						title="Deletar esse ítem de pedido">
+							<button class="btn btn-danger">
+								Deletar
+							</button>
+						</a>
 					</td>
 				</tr>
 			</table>
@@ -119,25 +124,27 @@
 		<div class="container">
 		  	<a href="{% url 'core:index' %}">
 			<button type="button" 
-		  	class="btn btn-outline-primary">
+		  	class="btn btn-primary">
 				Continuar comprando
 			</button>
 			</a>
 			<button type="button" 
-		  	class="btn btn-outline-primary">
+		  	class="btn btn-primary">
 				Finalizar Pedido
 			</button>
 		  	
-		  	<a href="#">
+		  	<a href="{% url 'dashboard_client:cancel_orderArt' data.orderArt.id %}" 
+		  	title="Cancelar pedido">
 		  	<button type="button" 
-		  	class="btn btn-outline-primary">
+		  	class="btn btn-danger">
 				Cancelar
 			</button>
 			</a>
 			
 		</div>
 		</div>
-		<h3>
+
+		<h3 style="margin: 3%;">
 			Total R$: {{ data.total }}
 		</h3>
 	{% else %}

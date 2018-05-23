@@ -88,9 +88,25 @@ def delete_oii(request, oii_id):
 
 
 @login_required
+def delete_oia(request, oia_id):
+	orderItemArt = OrderItemArt.objects.get(id=oia_id)
+	orderItemArt.delete()
+	messages.success(request, 'Ítem deletado com sucesso!')
+	return HttpResponseRedirect(reverse('dashboard_client:index'))
+
+
+@login_required
 def cancel_orderImpress(request, oi_id):
 	orderImpress = OrderImpress.objects.get(id=oi_id)
 	orderImpress.delete()
+	messages.success(request, 'Pedido deletado com sucesso!')
+	return HttpResponseRedirect(reverse('dashboard_client:index'))
+
+
+@login_required
+def cancel_orderArt(request, oa_id):
+	orderArt = OrderArt.objects.get(id=oa_id)
+	orderArt.delete()
 	messages.success(request, 'Pedido deletado com sucesso!')
 	return HttpResponseRedirect(reverse('dashboard_client:index'))	
 
@@ -296,3 +312,4 @@ def send_model(request, oia_id):
 			return HttpResponse(form.errors)
 
 		return redirect('dashboard_client:index_art')
+
