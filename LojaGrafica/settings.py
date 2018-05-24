@@ -25,7 +25,7 @@ SECRET_KEY = 'fggsn9o_xfeg_46u0mw&_*)77c=1!0c3)oe)zja+-5n9zvtigz'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -79,23 +79,23 @@ WSGI_APPLICATION = 'LojaGrafica.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-# sudo apt-get install python-dev python3-dev
-# sudo apt-get install libmysqlclient-dev
-# pip install pymysql
-# pip install mysqlclient
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'loja_grafica',
+#         'USER': 'adriano',
+#         'PASSWORD': '453231',
+#         'HOST': '127.0.0.1',
+#         'PORT': '5432',
+#     }
+# }
 
-# backup and restore database:
-# mysqldump -u root -p loja_grafica > loja_grafica_backup.sql
-# mysql -u root -p loja_grafica < loja_grafica_backup.sql
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {
-            'read_default_file': os.path.join(BASE_DIR, 'my.cnf'),
-        },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'loja_grafica.db'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
