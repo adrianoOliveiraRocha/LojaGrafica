@@ -10,7 +10,7 @@ class UserAdminCreationForm(UserCreationForm):
 
 	class Meta:
 		model = User
-		# informações exibidas na hora da criação de usuário
+		# informations showed when create use
 		fields = ['username', 'email', 'name', 'cpf', 'telefone', 'logradouro',
 		'numero', 'cep', 'complemento', 'bairro', 'estado']
 

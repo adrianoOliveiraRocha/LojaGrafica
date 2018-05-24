@@ -283,3 +283,29 @@ def detail_oa(request, oa_id):
 		'itens_list': itens_list}
 
 	return render(request, 'dashboard_admin/detail_oa.html', context)
+
+
+@login_required
+def become_inactive(request, client_id):
+	user = User.objects.get(id=client_id)
+	user.is_active = False
+	user.save()
+	return HttpResponseRedirect(reverse('dashboard_admin:client_detail', 
+		kwargs={'client_id': client_id})) 
+
+
+@login_required
+def become_active(request, client_id):
+	user = User.objects.get(id=client_id)
+	user.is_active = True
+	user.save()
+	return HttpResponseRedirect(reverse('dashboard_admin:client_detail', 
+		kwargs={'client_id': client_id})) 
+
+
+@login_required
+def all_members(request):
+	all_members = User.get_all_members()
+	context = {'all_members': all_members}
+	return render(request, 'dashboard_admin/all_members.html',
+		context)

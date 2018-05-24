@@ -10,6 +10,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
+from django.shortcuts import resolve_url
 
 
 class RegisterView(CreateView):
@@ -96,3 +97,37 @@ def my_data(request):
 
 	return render(request, 'accounts/my_data.html', context)
 
+
+@login_required
+def new_member(request):
+	context = {'new_member': True}
+	if request.method == 'GET':
+		form = UserAdminCreationForm()
+		context['form'] = form
+		return render(request, 'accounts/register.html', context)
+		
+	else:
+		form = UserAdminCreationForm(request.POST)
+		context['form'] = form
+		if form.is_valid():
+			user = User()
+			user.username = form.cleaned_data['username']
+			user.name = form.cleaned_data['name']
+			user.email = form.cleaned_data['email']
+			user.telefone = form.cleaned_data['telefone']
+			user.cpf = form.cleaned_data['cpf']
+			user.logradouro = form.cleaned_data['logradouro']
+			user.numero = form.cleaned_data['numero']
+			user.cep = form.cleaned_data['cep']
+			user.complemento = form.cleaned_data['complemento']
+			user.bairro = form.cleaned_data['bairro']
+			user.estado = form.cleaned_data['estado']
+			user.is_staff = True
+			user.set_password(form.cleaned_data['password1'])
+			user.save()
+			messages.success(request, 'Novo membro da equipe criado com sucesso!')
+			url = resolve_url('/area_administrativa/index')
+			return HttpResponseRedirect(url)
+		else:
+			return render(request, 'accounts/register.html', context)
+	

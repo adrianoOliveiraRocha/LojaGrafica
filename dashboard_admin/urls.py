@@ -36,5 +36,9 @@ urlpatterns = [
 		name='artcreation_admin'),
 	path('datail_oa/<int:oa_id>', views.detail_oa,
 		name='datail_oa'),
-		
+	path('tornar_inativo/<int:client_id>', views.become_inactive,
+		name='become_inactive'),
+	path('tornar_ativo/<int:client_id>', views.become_active,
+		name='become_active'),	
+	path('exibir_membros', views.all_members, name='all_members'),
 ]

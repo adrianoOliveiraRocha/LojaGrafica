@@ -64,6 +64,23 @@
 			<td>{{ client.date_joined }}</td>
 		</tr>
 	</table>
+	<table>
+		<td>
+			<td>
+				{% if client.is_active %}
+				<a href="{% url 'dashboard_admin:become_inactive' client.id %}"
+				class="btn btn-danger">
+					Tornar Inativo	
+				</a>
+				{% else %}
+				<a href="{% url 'dashboard_admin:become_active' client.id %}" 
+				class="btn btn-primary">
+					Tornar Ativo	
+				</a>
+				{% endif %}
+			</td>
+		</td>
+	</table>
 
 </div>
 {% endblock %}

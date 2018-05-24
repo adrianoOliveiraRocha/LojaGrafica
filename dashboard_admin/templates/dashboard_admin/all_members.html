@@ -1,0 +1,81 @@
+{% extends 'dashboard_admin/index.html' %}
+
+{% block extra %}
+{% load da_tags %}
+{% endblock %}
+
+{% block central_column %}
+<!-- COLUNA DO MEIO -->
+<div class="col-sm-9">
+	{% block dashboard_title %}
+	<h5>Área Administrativa -> Clientes Cadastrados</h5>
+	{% endblock %}
+
+	<div class="container" style="width: 100%">
+	  {% if messages %}
+	    {% for message in messages %}
+	        <div class="alert alert-success alert-dismissable">
+	          <button type="button" class="close" data-dismiss="alert">&times;</button>
+	          {{ message }}
+	        </div>
+	    {% endfor %}
+	  {% endif %}
+	</div>
+	
+<!-- datatable -->
+<div class="panel-body">
+  <table id="table" class="display" cellspacing="0" 
+        width="100%">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>E-Mail</th>
+        <th>Telefone</th>
+        <th>Status</th>
+        <th>Data de Cadastro</th>
+      </tr>
+    </thead>
+
+    <tfoot>
+      <tr>
+        <th>Nome</th>
+        <th>E-Mail</th>
+        <th>Telefone</th>
+        <th>Status</th>
+        <th>Data de Cadastro</th>
+      </tr>
+    </tfoot>
+
+    <tbody>
+		{% for member in all_members %}
+
+		<tr>
+			<td style="text-align: center;">
+				<a href="#"
+				title="Detalhes">
+					{{ member }}
+				</a>
+			</td>
+			<td style="text-align: center;">
+				{{ member.email }}
+			</td>
+			<td style="text-align: center;">
+				{{ member.telefone }}
+			</td>
+			<td style="text-align: center;">
+				{% is_active member.is_active %}
+			</td>
+			<td style="text-align: center;">
+				{{ member.date_joined }}
+			</td>
+			
+		</tr>
+
+		{% endfor %}    
+    </tbody>
+  </table>
+</div>
+<!-- fim datatable --> 
+
+</div>
+{% endblock %}
