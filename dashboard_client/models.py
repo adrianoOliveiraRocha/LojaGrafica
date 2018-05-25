@@ -177,6 +177,7 @@ class OrderItemImpress(models.Model):
 
 	@staticmethod
 	def getList(order_id):
+		''' returns the list that items that order and your total value '''
 		orderItemImpress_list = \
 		OrderItemImpress.objects.filter(order_id=order_id)
 		total = 0

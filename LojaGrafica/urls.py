@@ -27,5 +27,6 @@ urlpatterns = [
     path('entrar/', login, {'template_name': 'core/login.html'}, name='login'),
     path('sair', logout, {'next_page': 'core:index'}, name='logout'),
     path('area_administrativa/', include('dashboard_admin.urls'), name='index'),
-    path('area_do_cliente/', include('dashboard_client.urls'), name='index')
+    path('area_do_cliente/', include('dashboard_client.urls'), name='index'),
+    path('checkout/', include('checkout.urls'), name='finalize_payment')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

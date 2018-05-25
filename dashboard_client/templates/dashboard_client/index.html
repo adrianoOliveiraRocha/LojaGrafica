@@ -232,22 +232,18 @@
 						
 						<!-- butoons here -->
 						<div class="container">
-						  	<a href="{% url 'core:index' %}">
-							<button type="button" 
+						  	<a href="{% url 'core:index' %}"
 						  	class="btn btn-primary">
-								Continuar comprando
-							</button>
+							Continuar Comprando
 							</a>
-							<button type="button" 
+							<a href="{% url 'checkout:finalize_payment' data.order.id %}" 
 						  	class="btn btn-primary">
 								Finalizar Pedido
-							</button>
+							</a>
 
-						  	<a href="{% url 'dashboard_client:cancel_orderImpress' data.order.id %}">
-						  	<button type="button" 
+						  	<a href="{% url 'dashboard_client:cancel_orderImpress' data.order.id %}"
 						  	class="btn btn-danger">
-								Cancelar
-							</button>
+						  		Cancelar
 							</a>
 
 						</div>
