@@ -306,6 +306,8 @@ def become_active(request, client_id):
 @login_required
 def all_members(request):
 	all_members = User.get_all_members()
+	for member in all_members:
+		print(member.telefone)
 	context = {'all_members': all_members}
 	return render(request, 'dashboard_admin/all_members.html',
 		context)

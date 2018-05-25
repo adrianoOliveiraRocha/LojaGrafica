@@ -83,11 +83,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 	@staticmethod
 	def get_all_members():
 		""" get all users that is staff """
-		all_clients = []
+		all_members = []
 		users = User.objects.all()
 		for user in users:
 			if user.is_staff:
-				all_clients.append(user)
-		return all_clients
+				all_members.append(user)
+		return all_members
 
 	

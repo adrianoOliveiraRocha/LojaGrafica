@@ -8,7 +8,7 @@
 <!-- COLUNA DO MEIO -->
 <div class="col-sm-9">
 	{% block dashboard_title %}
-	<h5>Área Administrativa -> Clientes Cadastrados</h5>
+	<h5>Área Administrativa -> Membros da Equipe</h5>
 	{% endblock %}
 
 	<div class="container" style="width: 100%">
@@ -28,7 +28,7 @@
         width="100%">
     <thead>
       <tr>
-        <th>Nome</th>
+        <th>Membro</th>
         <th>E-Mail</th>
         <th>Telefone</th>
         <th>Status</th>
@@ -38,7 +38,7 @@
 
     <tfoot>
       <tr>
-        <th>Nome</th>
+        <th>Membro</th>
         <th>E-Mail</th>
         <th>Telefone</th>
         <th>Status</th>
@@ -60,7 +60,11 @@
 				{{ member.email }}
 			</td>
 			<td style="text-align: center;">
+				{% if member.telefone %}
 				{{ member.telefone }}
+				{% else %}
+				<i style="color: red">Não definido</i>
+				{% endif %}
 			</td>
 			<td style="text-align: center;">
 				{% is_active member.is_active %}
