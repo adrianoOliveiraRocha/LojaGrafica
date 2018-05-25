@@ -72,6 +72,7 @@
 									<th>Descrição</th>
 									<th>Valor R$</th>
 									<th>Arte</th>
+									<th>Modelo</th>
 									<th></th>
 								</tr>
 							</thead>
@@ -100,7 +101,15 @@
 										{% endif %}
 
 									</td>
-									
+									<td>
+										<a href="{% url 'dashboard_client:send_model_impress' item.id %}">
+											{% if item.model %}
+											Alterar
+											{% else %}
+											Enviar
+											{% endif %}
+										</a>
+									</td>
 									<td>
 										<a href="{% url 'dashboard_client:delete_oii' item.id %}"
 										title="Deletar esse ítem do pedido">

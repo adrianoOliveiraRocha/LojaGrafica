@@ -32,5 +32,7 @@ urlpatterns = [
         name='delete_oia'),
     path('cancelar_pedido_arte/<int:oa_id>', views.cancel_orderArt,
         name='cancel_orderArt'),
-    
+    path('enviar_modelo_impress/<int:oip_id>', views.send_model_impress,
+        name='send_model_impress'),
+
 ]

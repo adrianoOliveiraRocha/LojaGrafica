@@ -313,3 +313,30 @@ def send_model(request, oia_id):
 
 		return redirect('dashboard_client:index_art')
 
+
+@login_required
+def send_model_impress(request, oip_id):
+	
+	orderItemImpressForm = OrderItemImpressForm(request.POST, request.FILES)
+	context = {'form': orderItemImpressForm}
+
+	if request.method == 'GET':
+		 return render(request, 'dashboard_client/send_model.html',
+			context)
+	else:
+		if orderItemImpressForm.is_valid():
+			orderItemImpress = OrderItemImpress.objects.get(id=oip_id)
+			
+			orderItemImpress.model = \
+			orderItemImpressForm.cleaned_data['model']
+
+			orderItemImpress.save()
+
+			messages.add_message(request, messages.INFO,
+				"Arquivo enviado com sucesso!")
+
+		else:
+			return HttpResponse(form.errors)
+
+		return redirect('dashboard_client:index')
+
