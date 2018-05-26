@@ -19,6 +19,6 @@ def finalize_payment(request, order_id):
 	if isinstance(order, OrderArt):
 		pass
 	elif isinstance(order, OrderImpress):
-		orderItems, total = OrderImpress.getList(order_id)
+		orderItems, total = OrderItemImpress.getList(order_id)
 
 	return render(request, 'checkout/finalize_payment.html')
