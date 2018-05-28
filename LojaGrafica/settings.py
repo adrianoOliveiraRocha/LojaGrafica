@@ -171,3 +171,7 @@ MESSAGE_TAGS = {
     messages_constants.WARNING: 'warning',
     messages_constants.ERROR: 'danger', # used in bootstrap
 }
+
+PAGSEGURO_TOKEN = "390CF2D3A2CB4C36BF19A30243AF536B"
+PAGSEGURO_EMAIL = "adriano.qwe32@yahoo.com.br"
+PAGSEGURO_SANDBOX = True

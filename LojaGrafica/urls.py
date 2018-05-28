@@ -18,6 +18,7 @@ from django.urls import path, include
 from django.contrib.auth.views import login, logout
 from django.conf.urls.static import static
 from django.conf import settings
+from . import views
 
 
 urlpatterns = [
@@ -28,5 +29,7 @@ urlpatterns = [
     path('sair', logout, {'next_page': 'core:index'}, name='logout'),
     path('area_administrativa/', include('dashboard_admin.urls'), name='index'),
     path('area_do_cliente/', include('dashboard_client.urls'), name='index'),
-    path('checkout/', include('checkout.urls'), name='finalize_payment')
+    path('checkout/', include('checkout.urls'), name='finalize_payment'),
+    path('obrigado/', views.thanks, name='thanks'),
+    path('notification/', views.notification, name='notification')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

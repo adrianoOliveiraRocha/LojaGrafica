@@ -1,13 +1,21 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from dashboard_client.models import (OrderImpress, OrderItemImpress,
 	OrderArt, OrderItemArt)
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
+from accounts.models import User
 
 
 @login_required
 def finalize_payment(request, order_id):
+	context = {'order_id': order_id}
+	return render(request, 'checkout/finalize_payment.html',
+		context)
+
+
+@login_required
+def finalizing(request, order_id):
 	order = None
 	orderItems = None
 	total = None
@@ -17,8 +25,11 @@ def finalize_payment(request, order_id):
 		order = OrderImpress.objects.get(id=order_id)
 
 	if isinstance(order, OrderArt):
-		pass
+		return HttpResponse('this part yet not is finished')
 	elif isinstance(order, OrderImpress):
-		orderItems, total = OrderItemImpress.getList(order_id)
+		user = User.objects.get(id=request.user.id)
+		pg = OrderImpress.pagseguro(order_id, user)
+		response = pg.checkout()
+		return redirect(response.payment_url)
 
-	return render(request, 'checkout/finalize_payment.html')
+

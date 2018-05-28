@@ -2,6 +2,8 @@ from django.db import models
 from core.models import Service
 from datetime import date
 from accounts.models import User
+from pagseguro import PagSeguro
+from django.conf import settings
 
 
 STATUS_CHOICE = (
@@ -139,6 +141,38 @@ class OrderImpress(models.Model):
 			return OrderImpress.objects.get(id=last_id)
 		else:
 			return None
+
+	@staticmethod
+	def pagseguro(order_id, user):
+        # this PAGSEGURO_TOKEN is for tests
+		config = {
+			'USE_SHIPPING': False,
+			'sandbox': settings.PAGSEGURO_SANDBOX
+		}
+		pg = PagSeguro(
+			email=settings.PAGSEGURO_EMAIL, token=settings.PAGSEGURO_TOKEN,
+			config=config
+		)
+		pg.sender = {'email': user.email}
+		pg.reference_prefix = '' # this reference is equal order id
+		pg.shipping = None
+		pg.reference = order_id
+		orderItems = OrderItemImpress.objects.filter(order__id=order_id) 
+		
+		for item in orderItems:
+			pg.items.append(
+				{
+					'id': item.id,
+					'description': item.service.description,
+					'quantity': 1,
+					'amount': '%.2f' % item.service.value
+				}        
+			)
+
+		pg.redirect_url = "http://lojagrafica.herokuapp.com/obrigado"
+		pg.notification_url = "http://lojagrafica.herokuapp.com/notification"
+        
+		return pg
 
 
 class OrderItemImpress(models.Model):
