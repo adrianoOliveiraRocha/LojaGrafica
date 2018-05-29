@@ -153,7 +153,10 @@ class OrderImpress(models.Model):
 			email=settings.PAGSEGURO_EMAIL, token=settings.PAGSEGURO_TOKEN,
 			config=config
 		)
-		pg.sender = {'email': user.email}
+		pg.sender = {
+			'email': user.email,
+			'phone': user.telefone
+		}
 		pg.reference_prefix = '' # this reference is equal order id
 		pg.shipping = None
 		pg.reference = order_id
@@ -170,6 +173,7 @@ class OrderImpress(models.Model):
 			)
 
 		pg.redirect_url = "http://lojagrafica.herokuapp.com/obrigado"
+		# set the url for notifications
 		pg.notification_url = "http://lojagrafica.herokuapp.com/notification"
         
 		return pg

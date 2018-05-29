@@ -30,6 +30,8 @@ def finalizing(request, order_id):
 		user = User.objects.get(id=request.user.id)
 		pg = OrderImpress.pagseguro(order_id, user)
 		response = pg.checkout()
+		# here i need push the order id in session variable because i 
+		# have that take it in method thanks
 		return redirect(response.payment_url)
 
 
