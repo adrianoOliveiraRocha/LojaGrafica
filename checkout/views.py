@@ -32,6 +32,7 @@ def finalizing(request, order_id):
 		response = pg.checkout()
 		# here i need push the order id in session variable because i 
 		# have that take it in method thanks
+		request.session['order_id'] = order_id
 		return redirect(response.payment_url)
 
 

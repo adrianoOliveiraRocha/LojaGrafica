@@ -26,5 +26,19 @@ def notification(request):
 	return HttpResponse(msg)
 
 def thanks(request):
+	# i setting the pagseguro for send the transaction_id
+	transaction_id = request.GET['transaction_id']
+	order_id = int(request.session['order_id'])
+	order = None 
+
+	try:
+		order = OrderArt.objects.get(id=order_id)
+	except:
+		order = OrderImpress.objects.get(id=order_id)
+
+	order.transaction_id = transaction_id
+	order.save()
+	request.session['order_id'] = None
+
 	return HttpResponse('obrigado')
 	

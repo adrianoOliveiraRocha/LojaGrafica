@@ -107,4 +107,3 @@ class ServiceImpress(Service):
 	deadline = models.PositiveSmallIntegerField('Prazo em dias para criação de arte',
 		null=True, blank=True)
 	
-	

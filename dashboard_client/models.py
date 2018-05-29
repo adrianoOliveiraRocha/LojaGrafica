@@ -55,6 +55,8 @@ class OrderImpress(models.Model):
 		blank=True, default='')
 	estado_delivery = models.CharField('Estado', max_length=100, null=True,
 		blank=True, default='')
+	transaction_id = models.CharField('ID da transação', max_length=100, null=True,
+		blank=True)
 		
 	def __str__(self):
 		return 'Feito por {} em {}'.format(self.user, self.date)
@@ -233,6 +235,8 @@ class OrderArt(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	model = models.FileField(upload_to='orderArt_models', blank=True,
 		null=True)
+	transaction_id = models.CharField('ID da transação', max_length=100, null=True,
+		blank=True)
 
 	def __str__(self):
 		return 'Feito por {} em {}'.format(self.user, self.date)
