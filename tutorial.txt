@@ -12,3 +12,9 @@ colocar imagens no sistema:
 
 
 instalação no windows: http://timmyreilly.azurewebsites.net/python-pip-virtualenv-installation-on-windows/
+
+Virtualenv no windows:
+https://virtualenv.pypa.io/en/stable/userguide/
+On Windows, the equivalent activate script is in the Scripts folder:
+\path\to\env\Scripts\activate
+And type deactivate to undo the changes.
