@@ -9,3 +9,6 @@ colocar imagens no sistema:
 1 - colocar a imagem na pasta LojaGrafica/media/system
 2 - Para lêr a imagem em qualquer página html do sistema: 
 	<img src="/media/system/nomeDaImagem">
+
+
+instalação no windows: http://timmyreilly.azurewebsites.net/python-pip-virtualenv-installation-on-windows/
