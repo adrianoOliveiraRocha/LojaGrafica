@@ -9,26 +9,31 @@ from django.conf import settings
 STATUS_CHOICE = (
 			('FZ', 'finalizado'), 
 			('EA', 'em andamento'),
-			('CL', 'cancelado'),
-			('PG', 'pago')
 		)
+
+STATUS_PAGSEGURO = (
+		('1', 'Completo'), ('2', 'Aprovado'), 
+		('3', 'Em Análise'), ('4', 'Devolvido'),
+		('5', 'Cancelado')
+	)
 
 # Order Impress
 class OrderImpress(models.Model):
 	
 	UF_CHOICES = (
-    ('AC','Acre'), ('AL','Alagoas'), ('AP','Amapá'),
-    ('AM','Amazonas'), ('BA','Bahia'), ('CE','Ceará'),
-    ('DF','Distrito Federal'), ('ES','Espírito Santo'),
-    ('GO','Goiás'), ('MA','Maranhão'), ('MT','Mato Grosso'),
-    ('MS','Mato Grosso do Sul'), ('MG','Minas Gerais'),
-    ('PA','Pará'), ('PB','Paraíba'), ('PR','Paraná'),
-    ('PE','Pernambuco'), ('PI','Piauí'),
-    ('RJ','Rio de Janeiro'), ('RN','Rio Grande do Norte'),
-    ('RS','Rio Grande do Sul'), ('RO','Rondônia'),
-    ('RR','Roraima'), ('SC','Santa Catarina'),
-    ('SP','São Paulo'), ('SE','Sergipe'),
-	('TO','Tacantins'), )
+	    ('AC','Acre'), ('AL','Alagoas'), ('AP','Amapá'),
+	    ('AM','Amazonas'), ('BA','Bahia'), ('CE','Ceará'),
+	    ('DF','Distrito Federal'), ('ES','Espírito Santo'),
+	    ('GO','Goiás'), ('MA','Maranhão'), ('MT','Mato Grosso'),
+	    ('MS','Mato Grosso do Sul'), ('MG','Minas Gerais'),
+	    ('PA','Pará'), ('PB','Paraíba'), ('PR','Paraná'),
+	    ('PE','Pernambuco'), ('PI','Piauí'),
+	    ('RJ','Rio de Janeiro'), ('RN','Rio Grande do Norte'),
+	    ('RS','Rio Grande do Sul'), ('RO','Rondônia'),
+	    ('RR','Roraima'), ('SC','Santa Catarina'),
+	    ('SP','São Paulo'), ('SE','Sergipe'),
+		('TO','Tacantins'), 
+	)
 
 	date = models.DateField(default=date.today, editable=False)
 	value = models.DecimalField('Valor R$', max_digits=10, 
@@ -57,6 +62,8 @@ class OrderImpress(models.Model):
 		blank=True, default='')
 	transaction_id = models.CharField('ID da transação', max_length=100, null=True,
 		blank=True)
+	status_pg = models.CharField('Status PagSeguro', max_length=10,
+		choices=STATUS_PAGSEGURO, default='3')
 		
 	def __str__(self):
 		return 'Feito por {} em {}'.format(self.user, self.date)
@@ -144,41 +151,15 @@ class OrderImpress(models.Model):
 		else:
 			return None
 
-	@staticmethod
-	def pagseguro(order_id, user):
-        # this PAGSEGURO_TOKEN is for tests
-		config = {
-			'USE_SHIPPING': False,
-			'sandbox': settings.PAGSEGURO_SANDBOX
-		}
-		pg = PagSeguro(
-			email=settings.PAGSEGURO_EMAIL, token=settings.PAGSEGURO_TOKEN,
-			config=config
-		)
-		pg.sender = {
-			'email': user.email,
-			'phone': user.telefone
-		}
-		pg.reference_prefix = '' # this reference is equal order id
-		pg.shipping = None
-		pg.reference = order_id
-		orderItems = OrderItemImpress.objects.filter(order__id=order_id) 
-		
-		for item in orderItems:
-			pg.items.append(
-				{
-					'id': item.id,
-					'description': item.service.description,
-					'quantity': 1,
-					'amount': '%.2f' % item.service.value
-				}        
-			)
 
-		pg.redirect_url = "http://lojagrafica.herokuapp.com/obrigado"
-		# set the url for notifications
-		pg.notification_url = "http://lojagrafica.herokuapp.com/notification"
-        
-		return pg
+	@staticmethod
+	def get_client(order_id):
+		orderImpress = OrderImpress.objects.get(id=order_id)
+		return orderImpress.user
+
+	@staticmethod
+	def get_orders_ap():
+		return OrderImpress.objects.filter(status='AP')
 
 
 class OrderItemImpress(models.Model):
@@ -224,6 +205,22 @@ class OrderItemImpress(models.Model):
 		for item in orderItemImpress_list:
 			total = total + item.service.value
 		return orderItemImpress_list, total
+
+	@staticmethod
+	def get_cart_items(order_id):
+		cart_items = []
+		items = OrderItemImpress.objects.filter(order_id=order_id)
+		count = 1
+		for item in items:
+			list_item = []
+			list_item.append(count)
+			list_item.append(item.id)
+			list_item.append(item.service.description)
+			list_item.append(str(item.service.value)) 
+			cart_items.append(list_item)
+			count = count + 1
+		return cart_items
+
 
 # Order Creation Art
 class OrderArt(models.Model):

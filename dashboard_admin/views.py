@@ -11,11 +11,17 @@ from core.forms import CategoryForm, ServiceForm
 from dashboard_client.models import OrderItemImpress
 from accounts.models import User
 from dashboard_client.models import OrderArt, OrderItemArt
+from django.conf import settings
+from django.shortcuts import redirect
+from django.shortcuts import resolve_url
 
 
 @login_required
 def index(request):
-	context = {'orderimpress_list': OrderImpress.objects.all()} 
+	# the user can see the orders finalizeds
+	context = {'orderimpress_list': OrderImpress.objects.all()}
+	orderimpress_list = OrderImpress.objects.all()
+	
 	if request.user.is_staff:
 		return render(request, 'dashboard_admin/index.html', context)
 	else:
@@ -311,3 +317,31 @@ def all_members(request):
 	context = {'all_members': all_members}
 	return render(request, 'dashboard_admin/all_members.html',
 		context)
+
+
+@login_required
+def update_pg_status(request, order_id):
+	import requests
+	import xml.etree.ElementTree as ET
+	
+	orer = None
+	try:
+		order = OrderArt.objects.get(id=order_id) 
+	except:
+		order = OrderImpress.objects.get(id=order_id)
+
+	email = settings.PAGSEGURO_EMAIL
+	token = settings.PAGSEGURO_TOKEN
+
+	url = "https://ws.sandbox.pagseguro.uol.com.br/v2/transactions/{}?email={}&token={}".format(order.transaction_id, 
+		email, token)
+	r = requests.get(url)
+	string_xml = r.text
+	root = ET.fromstring(string_xml)
+	status_pg = root[4].text
+	print('current status {}'.format(order.status_pg))
+	print('new status {}'.format(status_pg))
+	order.status_pg = status_pg
+	order.save()
+	url_return = resolve_url('/area_administrativa/detalhes_do_pedido/{}'.format(order.id))
+	return HttpResponseRedirect(url_return)

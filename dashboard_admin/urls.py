@@ -41,4 +41,6 @@ urlpatterns = [
 	path('tornar_ativo/<int:client_id>', views.become_active,
 		name='become_active'),	
 	path('exibir_membros', views.all_members, name='all_members'),
+	path('atualizar_pgstatus/<int:order_id>', views.update_pg_status,
+		name='update_pg_status'),
 ]

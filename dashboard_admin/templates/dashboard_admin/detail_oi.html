@@ -33,6 +33,18 @@ Pedido</h5>
 			
 		</td>
 	</tr>
+	<tr>
+		<td>Status PagSeguro</td>
+		{% if orderimpress.status_pg %}
+		<td>{% show_status_pg  orderimpress.status_pg %}</td>
+		{% else %}
+		<td style="color: red">Não recebido</td>
+		{% endif %}
+		<td>
+			<a href="{% url 'dashboard_admin:update_pg_status' orderimpress.id %}" 
+			class="btn btn-primary">Atualizar</a>
+		</td>
+	</tr>
 </table>
 <h5>Ítens do Pedido</h5>
 <table class="table">

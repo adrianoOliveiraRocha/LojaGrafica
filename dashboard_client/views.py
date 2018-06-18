@@ -12,6 +12,7 @@ from . forms import OrderItemImpressForm, OrderItemArtForm
 @login_required
 def index(request):
 	""" the index show the order impress """
+	data = OrderImpress.get_orderImpress_data(request.user.id) 
 	context = {'data': OrderImpress.get_orderImpress_data(request.user.id)}
 	return render(request, 'dashboard_client/index.html', context)
 

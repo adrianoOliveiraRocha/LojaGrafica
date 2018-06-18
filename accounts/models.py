@@ -45,6 +45,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 	complemento = models.TextField('Complamento', max_length=100, 
 		null=True, blank=True)
 	bairro = models.CharField('Bairro', max_length=100, null=True, blank=True)
+	cidade = models.CharField('Cidade', max_length=100, null=True, blank=True)
 	estado = models.CharField('Estado', max_length=100, null=True, blank=True,
 		choices=UF_CHOICES)
 	

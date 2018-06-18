@@ -57,13 +57,143 @@
 					</div>
 
 					<div>
-						<a href="{% url 'checkout:finalizing' order_id %}" 
-						class="btn btn-success">
-							Pagar com PagSeguro
-						</a>						
+						
+						<form method="post" target="pagseguro" 
+						action="https://sandbox.pagseguro.uol.com.br/v2/checkout/payment.html" 
+						enctype="Content-Type: application/x-www-form-urlencoded; charset=UTF-8">
+							{% csrf_token %}
+							<input name="receiverEmail" value="adriano.qwe32@yahoo.com.br" type="hidden">
+							<input name="currency" value="BRL" type="hidden">
+							<input name="token"
+							value="390CF2D3A2CB4C36BF19A30243AF536B"
+							type="hidden">
+
+							{% for item in cart_items %}
+							<input name="itemId{{item.0}}" value="{{item.1}}"
+							type="hidden">
+							<input name="itemDescription{{item.0}}" 
+							value="{{item.2}}" type="hidden">
+							<input name="itemAmount{{item.0}}" 
+							value="{{item.3}}" type="hidden">
+							<input name="itemQuantity{{item.0}}" value="1"
+							type="hidden">   
+							<!-- <input name="itemShippingCost{{item.0}}" value="0.0"
+							type="hidden"> -->
+
+							{% endfor %}
+							<!-- client data -->
+
+							<!-- main data -->
+							<input name="senderEmail"
+							value="c13852685437790609596@sandbox.pagseguro.com.br" 
+							type="hidden">
+							<input name="senderName"
+							value="{{client.name}}" type="hidden">  
+							<input name="senderPhone"
+							value="{{client.telefone}}" type="hidden">
+							<input name="shippingAddressCountry" value="BRA"
+							type="hidden">
+							<!-- end main data -->
+
+							<!-- delivery -->
+							<!-- endereço de entrega é o mesmo -->
+							{% if order.delivery_address_is_the_same %}
+
+
+							{% if client.estado %}
+							<input name="shippingAddressState" value="{{client.estado}}"
+							type="hidden">
+							{% endif %}
+
+							{% if client.cidade %}
+							<input name="shippingAddressCity" 
+							value="{{client.cidade}}">
+							{% endif %}
+
+							{% if client.cep %}
+							<input name="shippingAddressPostalCode" 
+							value="{{client.cep}}" type="hidden">
+							{% endif %}
+
+							{% if client.bairro %}
+							<input name="shippingAddressDistrict" 
+							value="{{client.bairro}}" type="hidden">
+							{% endif %}
+
+							{% if client.logradouro %}
+							<input name="shippingAddressStreet" 
+							value="{{client.logradouro}}" type="hidden">
+							{% endif %}
+
+							{% if client.numero %}
+							<input name="shippingAddressNumber" 
+							value="{{client.numero}}" type="hidden">
+							{% endif %}
+
+							{% if client.complemento %}
+							<input name="shippingAddressComplement" 
+							value="{{client.complemento}}" type="hidden">
+							{% endif %}
+
+
+							{% else %}
+							<!-- endereço de entrega é diferente -->
+
+							{% if order.estado_delivery %}
+							<input name="shippingAddressState" 
+							value="{{order.estado_delivery}}"
+							type="hidden">
+							{% endif %}
+
+							{% if order.cidade_delivery %}
+							<input name="shippingAddressCity" 
+							value="{{order.cidade_delivery}}">
+							{% endif %}
+
+							{% if order.cep_delivery %}
+							<input name="shippingAddressPostalCode" 
+							value="{{order.cep_delivery}}" type="hidden">
+							{% endif %}
+
+							{% if order.bairro_delivery %}
+							<input name="shippingAddressDistrict" 
+							value="{{order.bairro_delivery}}" type="hidden">
+							{% endif %}
+
+							{% if order.logradouro_delivery %}
+							<input name="shippingAddressStreet" 
+							value="{{order.logradouro_delivery}}" type="hidden">
+							{% endif %}
+
+							{% if order.numero_delivery %}
+							<input name="shippingAddressNumber" 
+							value="{{order.numero_delivery}}" type="hidden">
+							{% endif %}
+
+							{% if order.complemento_delivery %}
+							<input name="shippingAddressComplement" 
+							value="{{order.complemento_delivery}}" type="hidden">
+							{% endif %}
+
+
+							{% endif %}
+							<!-- delivery -->
+
+							<!-- end client data -->
+							<input name="encoding" value="UTF-8" type="hidden">
+        					<input name="reference" value="{{order.id}}"
+        					type="hidden"> 
+        					<input name="redirectURL" 
+        					value="http://lojagrafica.herokuapp.com/obrigado/"
+        					type="hidden">
+
+        					<input alt="Pague com PagSeguro" name="submit"  type="image"src="https://p.simg.uol.com.br/out/pagseguro/i/botoes/pagamentos/120x53-pagar.gif"/>  
+						</form>
+											
 					</div>
 
 				</div>
+				
 				{% endblock %}
 			</div>
 

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'dashboard_client',
     'widget_tweaks',
     'checkout',
+    
 ]
 
 MIDDLEWARE = [

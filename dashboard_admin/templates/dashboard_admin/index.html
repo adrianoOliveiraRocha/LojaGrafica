@@ -138,20 +138,24 @@
 	                    width="100%">
 	                <thead>
 	                  <tr>
+	                  	<th>Referencia</th>
 	                    <th>Data</th>
 	                    <th>Valor R$</th>
 	                    <th>Status</th>
 	                    <th>Cliente</th>
+	                    <th>Código Pagseguro</th>
 	                    
 	                  </tr>
 	                </thead>
 
 	                <tfoot>
 	                  <tr>
+	                  	<th>Referencia</th>
 	                    <th>Data</th>
 	                    <th>Valor R$</th>
 	                    <th>Status</th>
 	                    <th>Cliente</th>
+	                    <th>Código Pagseguro</th>
 	                  </tr>
 	                </tfoot>
 
@@ -159,17 +163,24 @@
 	                  {% for orderimpress in orderimpress_list %}
 	                  
 	                  <tr>
-	                  	
 	                  	<td style="text-align: center;">
 	                  	<a href="{% url 'dashboard_admin:datail_oi' orderimpress.id %}" 
 	                  	title="Exibir Detalhes do Pedido">
-	                      {{ orderimpress.date }}
+	                      {{ orderimpress.id }}
 	                  	</a>
 	                    </td>
+	                    <td style="text-align: center;">
+	                  	  {{ orderimpress.date }}
+	                  	</td>
 	                    
 	                    <td>{{ orderimpress.value }}</td>
 	                    <td>{% show_status orderimpress.status %}</td>
 	                    <td>{{ orderimpress.user }}</td>
+	                    {% if orderimpress.transaction_id %}
+	                    <td>{{ orderimpress.transaction_id }}</td>
+	                    {% else %}
+	                    <td>Não recebido</td>
+	                    {% endif %}
 	                  </tr>
 
 	                   {% endfor %}    
