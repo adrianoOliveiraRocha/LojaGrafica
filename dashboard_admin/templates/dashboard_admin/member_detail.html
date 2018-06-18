@@ -1,0 +1,70 @@
+{% extends 'dashboard_admin/index.html' %}
+
+{% block extra %}
+{% load da_tags %}
+{% endblock %}
+
+{% block central_column %}
+<!-- COLUNA DO MEIO -->
+<div class="col-sm-9">
+	{% block dashboard_title %}
+	<h5>Área Administrativa -> Membros Cadastrados -> Detalhes do Usuário</h5>
+	{% endblock %}
+
+	<div class="container" style="width: 100%">
+	  {% if messages %}
+	    {% for message in messages %}
+	        <div class="alert alert-success alert-dismissable">
+	          <button type="button" class="close" data-dismiss="alert">&times;</button>
+	          {{ message }}
+	        </div>
+	    {% endfor %}
+	  {% endif %}
+	</div>
+	
+	<table class="table">
+		<tr>
+			<td>Nome</td>
+			<td>{{ member.name }}</td>
+		</tr>
+		<tr>
+			<td>E-Mail</td>
+			<td>{{ member.email }}</td>
+		</tr>
+		<tr>
+			<td>Telefone</td>
+			<td>{{ member.telefone }}</td>
+		</tr>
+		<tr>
+			<td>CPF</td>
+			<td>{{ member.cpf }}</td>
+		</tr>
+		<tr>
+			<td>Logradouro</td>
+			<td>{{ member.logradouro }}</td>
+		</tr>
+		<tr>
+			<td>Número</td>
+			<td>{{ member.numero }}</td>
+		</tr>
+		<tr>
+			<td>Bairro</td>
+			<td>{{ member.bairro }}</td>
+		</tr>
+		<tr>
+			<td>Estado</td>
+			<td>{% fix_state member.estado %}</td>
+		</tr>
+		<tr>
+			<td>Status</td>
+			<td>{% is_active member.is_active %}</td>
+		</tr>
+		<tr>
+			<td>Data de Cadastro</td>
+			<td>{{ member.date_joined }}</td>
+		</tr>
+	</table>
+	
+
+</div>
+{% endblock %}

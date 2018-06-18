@@ -32,6 +32,8 @@ urlpatterns = [
 	path('clientes_cadastrados', views.all_clients, name='all_clients'),
 	path('detalhes_cliente/<int:client_id>', views.client_detail,
 		name='client_detail'),
+	path('detalhes_membro/<int:member_id>', views.member_detail,
+		name='member_detail'),
 	path('artcreation_admin', views.artcreation_admin,
 		name='artcreation_admin'),
 	path('datail_oa/<int:oa_id>', views.detail_oa,

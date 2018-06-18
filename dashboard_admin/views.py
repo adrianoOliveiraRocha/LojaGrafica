@@ -320,6 +320,15 @@ def all_members(request):
 
 
 @login_required
+def member_detail(request, member_id):
+	member = User.objects.get(id=member_id)
+	context = {'member': member}
+	return render(request, 'dashboard_admin/member_detail.html',
+		context)
+
+
+
+@login_required
 def update_pg_status(request, order_id):
 	import requests
 	import xml.etree.ElementTree as ET

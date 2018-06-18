@@ -1,0 +1,11 @@
+ligar o ambiente virtual:
+
+ligar o servidor web:
+1 - entra na pasta raiz do projeto
+2 - ligar a máquina virtual: source lg/bin/activite
+3 - ligar o servidor web: python manage.py runserver
+
+colocar imagens no sistema:
+1 - colocar a imagem na pasta LojaGrafica/media/system
+2 - Para lêr a imagem em qualquer página html do sistema: 
+	<img src="/media/system/nomeDaImagem">
