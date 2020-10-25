@@ -1,2 +1,2 @@
 
-I used python/django and mysql here :)
+I used python/django here :)
