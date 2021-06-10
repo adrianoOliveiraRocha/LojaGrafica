@@ -1,7 +1,7 @@
 arrow==0.12.1
 certifi==2018.4.16
 chardet==3.0.4
-Django==2.0.3
+Django==2.2.24
 django-cleanup==2.1.0
 django-widget-tweaks==1.4.1
 idna==2.6
