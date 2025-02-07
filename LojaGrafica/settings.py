@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'LojaGrafica.wsgi.application'
 #         'ENGINE': 'django.db.backends.postgresql',
 #         'NAME': 'loja_grafica',
 #         'USER': 'adriano',
-#         'PASSWORD': '453231',
+#         'PASSWORD': '87455988',
 #         'HOST': '127.0.0.1',
 #         'PORT': '5432',
 #     }
